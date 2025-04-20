@@ -4,18 +4,22 @@ export default function Home() {
   return (
     <>
       index 페이지입니다.
+      <br />
+      <br />
       <Link href="/community">/community 자유게시판 바로가기</Link>
       <br />
       <br />
       <Link href="/articles">
-        articles 목록 조회하기 (route.js 서버 컴포넌트)
+        /articles 아티클 목록 조회하기 (서버 컴포넌트)
       </Link>
       <br />
       <br />
       <Link href="/articles/1">
-        1번 articleId 조회하기(context.params.articleId) (route.js 서버
-        컴포넌트)
+        /articles/1 1번 아티클 조회하기 (서버 컴포넌트)
       </Link>
+      <br />
+      <br />
+      <Link href="/community/create">/community/create 아티클 생성 폼</Link>
     </>
   );
 }
