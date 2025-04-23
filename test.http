@@ -1,0 +1,23 @@
+### 회원가입
+
+POST https://panda-market-api.vercel.app/auth/signUp
+Content-Type: application/json
+
+{
+  "email": "abababcd@email.com",
+  "nickname": "abababcd",
+  "password": "abababcd",
+  "passwordConfirmation": "abababcd"
+}
+
+### 로그인
+
+POST https://panda-market-api.vercel.app/auth/signIn
+Content-Type: application/json
+
+{
+  "email": "abababcd@email.com",
+  "password": "abababcd"
+}
+
+###
