@@ -1,8 +1,15 @@
 import React from 'react'
+import UserEmailInput from '../components/UserEmailInput'
+import UserPasswordInput from '../components/UserPasswordInput'
+import SubmitButton from '../components/SubmitButton'
 
 function signinPage() {
   return (
-    <div>signinPage</div>
+    <form>
+      <UserEmailInput />
+      <UserPasswordInput />
+      <SubmitButton label={"로그인"} />
+    </form>
   )
 }
 
