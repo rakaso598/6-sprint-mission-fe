@@ -3,7 +3,7 @@ import UserEmailInput from '../components/UserEmailInput'
 import UserPasswordInput from '../components/UserPasswordInput'
 import SubmitButton from '../components/SubmitButton'
 
-function signinPage() {
+function SigninPage() {
   return (
     <form>
       <UserEmailInput />
@@ -13,4 +13,4 @@ function signinPage() {
   )
 }
 
-export default signinPage
+export default SigninPage
