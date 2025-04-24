@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="flex flex-col items-center">
-      <div className="mt-8 font-bold">index 페이지입니다!</div>
+      <div className="mt-8 font-bold text-xl">:: Docs ::</div>
       <div className="mt-8 underline text-blue-700">
         <Link href="/signin">/signin | 로그인 페이지</Link>
       </div>
