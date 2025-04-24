@@ -21,13 +21,13 @@ export default function Home() {
         <Link href="/community/create">/community/create | 아티클 생성 폼</Link>
       </div>
       <div className="mt-8 underline text-blue-700">
-        <Link href="/community/create">/signin | 로그인 페이지</Link>
+        <Link href="/signin">/signin | 로그인 페이지</Link>
       </div>
       <div className="mt-8 underline text-blue-700">
-        <Link href="/community/create">/signup | 회원가입 페이지</Link>
+        <Link href="/signup">/signup | 회원가입 페이지</Link>
       </div>
       <div className="mt-8 underline text-blue-700">
-        <Link href="/community/create">/items | 상품목록 페이지</Link>
+        <Link href="/items">/items | 상품목록 페이지</Link>
       </div>
     </div>
   );
