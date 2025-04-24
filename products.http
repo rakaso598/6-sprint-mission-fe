@@ -1,3 +1,8 @@
+### 상품 목록조회
+
+GET https://panda-market-api.vercel.app/products/
+Content-Type: application/json
+
 ### 상품 상세조회
 
 GET https://panda-market-api.vercel.app/products/1

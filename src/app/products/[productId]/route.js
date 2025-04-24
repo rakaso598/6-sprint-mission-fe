@@ -1,10 +1,8 @@
-// route.js (app/api/products/[productId]/route.js)
-
-// 상품 ID를 동적으로 처리하기 위해 파일명을 [productId]로 설정합니다.
+// app/api/products/[productId]/route.js
 
 /**
  * 상품 상세 조회
- * GET /api/products/[productId]
+ * GET /products/[productId]
  */
 export async function GET(request, { params }) {
   const { productId } = params;
@@ -37,7 +35,7 @@ export async function GET(request, { params }) {
 
 /**
  * 상품 수정
- * PATCH /api/products/[productId]
+ * PATCH /products/[productId]
  */
 export async function PATCH(request, { params }) {
   const { productId } = params;
@@ -62,7 +60,7 @@ export async function PATCH(request, { params }) {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`, // 추출한 토큰을 Bearer 스키마로 설정
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(requestBody),
     });
@@ -91,13 +89,12 @@ export async function PATCH(request, { params }) {
 
 /**
  * 상품 삭제
- * DELETE /api/products/[productId]
+ * DELETE /products/[productId]
  */
 export async function DELETE(request, { params }) {
   const { productId } = params;
   const apiUrl = `https://panda-market-api.vercel.app/products/${productId}`;
 
-  // 요청 헤더에서 Authorization 토큰을 추출합니다.
   const authorizationHeader = request.headers.get("Authorization");
 
   if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
@@ -114,7 +111,7 @@ export async function DELETE(request, { params }) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`, // 추출한 토큰을 Bearer 스키마로 설정
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -125,13 +122,10 @@ export async function DELETE(request, { params }) {
       });
     }
 
-    // DELETE 요청은 일반적으로 응답 본문이 없을 수 있습니다.
-    // 성공적인 응답으로 204 No Content를 반환하거나,
-    // 삭제 성공 메시지를 JSON 형태로 반환할 수 있습니다.
     return new Response(
       JSON.stringify({ message: "상품이 성공적으로 삭제되었습니다." }),
       {
-        status: 200, // 또는 204 No Content
+        status: 200,
         headers: { "Content-Type": "application/json" },
       }
     );

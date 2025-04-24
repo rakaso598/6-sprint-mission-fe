@@ -22,14 +22,16 @@ export default function Home() {
         </Link>
       </div>
       <div className="mt-8 underline text-blue-700">
-        <Link href="/articles">
-          /articles | 아티클 목록 조회하기 (서버 컴포넌트)
-        </Link>
+        <Link href="/articles">/articles | 아티클 목록 조회하기</Link>
       </div>
       <div className="mt-8 underline text-blue-700">
-        <Link href="/articles/1">
-          /articles/1 | 1번 아티클 조회하기 (서버 컴포넌트)
-        </Link>
+        <Link href="/articles/1">/articles/1 | 1번 아티클 조회하기</Link>
+      </div>
+      <div className="mt-8 underline text-blue-700">
+        <Link href="/products/">/products | 상품 목록 조회하기</Link>
+      </div>
+      <div className="mt-8 underline text-blue-700">
+        <Link href="/products/1">/products/1 | 1번 상품 조회하기</Link>
       </div>
     </div>
   );
