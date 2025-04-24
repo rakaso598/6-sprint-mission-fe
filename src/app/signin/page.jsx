@@ -35,7 +35,7 @@ function SigninPage() {
 
       alert(`${data.user.nickname}님, 환영합니다!`);
 
-      router.push('/');
+      router.push('/items');
     } catch (error) {
       console.error('로그인 중 오류:', error)
     }
@@ -44,9 +44,11 @@ function SigninPage() {
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
-      router.push('http://localhost:3000/items');
+      router.push('/items');
+    } else {
+      alert("액세스토큰이없음");
     }
-  }, [router]);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>

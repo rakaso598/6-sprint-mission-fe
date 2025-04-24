@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function ItemsPage() {
-  return (
-    <div>ItemsPage</div>
-  )
+  return (<div>아이템페이지있는데?</div>);
 }
 
-export default ItemsPage
+export default ItemsPage;
