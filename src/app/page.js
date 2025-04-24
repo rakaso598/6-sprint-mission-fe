@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="flex flex-col items-center">
-      <div className="mt-8 font-bold">index 페이지입니다.</div>
+      <div className="mt-8 font-bold">index 페이지입니다!</div>
       <div className="mt-8 underline text-blue-700">
         <Link href="/community">/community | 자유게시판 바로가기</Link>
       </div>
@@ -19,6 +19,15 @@ export default function Home() {
       </div>
       <div className="mt-8 underline text-blue-700">
         <Link href="/community/create">/community/create | 아티클 생성 폼</Link>
+      </div>
+      <div className="mt-8 underline text-blue-700">
+        <Link href="/community/create">/signin | 로그인 페이지</Link>
+      </div>
+      <div className="mt-8 underline text-blue-700">
+        <Link href="/community/create">/signup | 회원가입 페이지</Link>
+      </div>
+      <div className="mt-8 underline text-blue-700">
+        <Link href="/community/create">/items | 상품목록 페이지</Link>
       </div>
     </div>
   );

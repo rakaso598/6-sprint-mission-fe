@@ -1,13 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import UserEmailInput from '../components/UserEmailInput'
 import UserPasswordInput from '../components/UserPasswordInput'
 import SubmitButton from '../components/SubmitButton'
+import { useRouter } from 'next/navigation'
 
 function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,11 +32,7 @@ function SignupPage() {
       //응답
       const data = await response.json();
 
-      const accessTokenExpiry = new Date(Date.now() + 60 * 60 * 1000).toUTCString();
-      document.cookie = `accessToken=${data.accessToken}; expires=${accessTokenExpiry}; path=/; HttpOnly;`;
-
-      const refreshTokenExpiry = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
-      document.cookie = `refreshToken=${data.refreshToken}; expires=${refreshTokenExpiry}; path=/; HttpOnly;`;
+      localStorage.setItem('accessToken', data.accessToken);
 
       alert(`${data.user.nickname}님, 환영합니다!`);
 
@@ -43,6 +41,15 @@ function SignupPage() {
       console.error('회원가입 요청 중 오류:', error)
     }
   }
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      router.push('/items');
+    } else {
+      alert("액세스토큰이없음");
+    }
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>

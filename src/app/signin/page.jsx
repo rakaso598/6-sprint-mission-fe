@@ -35,7 +35,7 @@ function SigninPage() {
 
       alert(`${data.user.nickname}님, 환영합니다!`);
 
-      router.push('/items');
+      router.push('/');
     } catch (error) {
       console.error('로그인 중 오류:', error)
     }
