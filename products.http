@@ -1,0 +1,28 @@
+### 상품 상세조회
+
+GET https://panda-market-api.vercel.app/products/1
+Content-Type: application/json
+
+### 상품 수정
+
+PATCH https://panda-market-api.vercel.app/products/1
+Content-Type: application/json
+Authorization: Basic eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkxLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc0NTQ4MjI3MiwiZXhwIjoxNzQ1NDg0MDcyLCJpc3MiOiJzcC1wYW5kYS1tYXJrZXQifQ.otNQpO9qtCgv0sAQpK6aMHHqL1B0spm85oyzEVIimW8
+
+{
+  "images": [
+    "https://example.com/..."
+  ],
+  "tags": [
+    "전자제품"
+  ],
+  "price": 0,
+  "description": "string",
+  "name": "상품 이름"
+}
+
+### 상품 삭제
+
+DELETE https://panda-market-api.vercel.app/products/1
+Content-Type: application/json
+Authorization: Basic eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkxLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc0NTQ4MjI3MiwiZXhwIjoxNzQ1NDg0MDcyLCJpc3MiOiJzcC1wYW5kYS1tYXJrZXQifQ.otNQpO9qtCgv0sAQpK6aMHHqL1B0spm85oyzEVIimW8
