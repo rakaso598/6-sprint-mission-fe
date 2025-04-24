@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import UserEmailInput from '../components/UserEmailInput'
 import UserPasswordInput from '../components/UserPasswordInput'
 import SubmitButton from '../components/SubmitButton'
+import Link from 'next/link'
 
 function SigninPage() {
   const [email, setEmail] = useState('');
@@ -50,6 +51,10 @@ function SigninPage() {
       <UserEmailInput value={email} onChange={(e) => setEmail(e.target.value)} />
       <UserPasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
       <SubmitButton label={"로그인"} />
+      <div className='flex justify-center'>
+        <span>판다마켓이 처음이신가요?</span>
+        <Link href={"/signup"}><span className='text-blue-600 underline'>회원가입</span></Link>
+      </div>
     </form>
   )
 }
