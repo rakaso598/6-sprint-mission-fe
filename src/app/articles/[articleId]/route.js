@@ -3,11 +3,10 @@ export async function GET(request, { params }) {
 
   try {
     const response = await fetch(
-      `https://fs-pandamarket-template-7-swagger-latest.onrender.com/articles/${articleId}`
-    ); // 실제 API 엔드포인트로 변경해주세요.
+      `https://panda-market-api.vercel.app/articles/${articleId}`
+    );
 
     if (!response.ok) {
-      // 에러 응답 처리
       return new Response(JSON.stringify({ message: "API 요청 실패" }), {
         status: response.status,
         headers: { "Content-Type": "application/json" },
@@ -16,7 +15,6 @@ export async function GET(request, { params }) {
 
     const data = await response.json();
 
-    // 성공적인 응답
     return new Response(JSON.stringify(data), {
       status: 200,
       headers: { "Content-Type": "application/json" },
