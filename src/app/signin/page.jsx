@@ -1,14 +1,16 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import UserEmailInput from '../components/UserEmailInput'
 import UserPasswordInput from '../components/UserPasswordInput'
 import SubmitButton from '../components/SubmitButton'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 function SigninPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,23 +30,23 @@ function SigninPage() {
       });
       //응답
       const data = await response.json();
-      alert(data.user.nickname);
 
-      // 액세스토큰 & 리프레쉬토큰
-      const accessToken = data.accessToken; // 액세스토큰 추출
-      const refreshToken = data.refreshToken; // 리프레쉬토큰 추출
+      localStorage.setItem('accessToken', data.accessToken);
 
-      const accessTokenExpiry = new Date(Date.now() + 60 * 60 * 1000).toUTCString(); // 액세스토큰 유효기간
-      document.cookie = `accessToken=${accessToken}; expires=${accessTokenExpiry}; path=/; HttpOnly;`; // 브라우저 쿠키에 저장
+      alert(`${data.user.nickname}님, 환영합니다!`);
 
-      const refreshTokenExpiry = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString(); // 리프레쉬토큰 유효기간
-      document.cookie = `refreshToken=${refreshToken}; expires=${refreshTokenExpiry}; path=/; HttpOnly;`; // 브라우저 쿠키에 저장
-
-      alert(`${accessToken}`); // 테스트: 액세스토큰의 값 확인해보기 (성공)
+      router.push('/');
     } catch (error) {
       console.error('로그인 중 오류:', error)
     }
   }
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      router.push('http://localhost:3000/items');
+    }
+  }, [router]);
 
   return (
     <form onSubmit={handleSubmit}>
