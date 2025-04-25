@@ -14,6 +14,9 @@ export default function Home() {
         <Link href="/items">/items | 상품목록 페이지</Link>
       </div>
       <div className="mt-8 underline text-blue-700">
+        <Link href="/items/1">/items/ID | 상품상세 페이지</Link>
+      </div>
+      <div className="mt-8 underline text-blue-700">
         <Link href="/community">/community | 자유게시판 페이지</Link>
       </div>
       <div className="mt-8 underline text-blue-700">
@@ -31,7 +34,7 @@ export default function Home() {
         <Link href="/products/">/products | 상품 목록 조회하기</Link>
       </div>
       <div className="mt-8 underline text-blue-700">
-        <Link href="/products/1">/products/1 | 1번 상품 조회하기</Link>
+        <Link href="/products/1">/products/ID | 상품상세 조회하기</Link>
       </div>
     </div>
   );
