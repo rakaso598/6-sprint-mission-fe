@@ -1,10 +1,11 @@
 // app/actions/product.js
+// `https://panda-market-api.vercel.app/products/${itemId}`,
 "use server";
 
 export async function getProductDetail(itemId) {
   try {
     const response = await fetch(
-      `https://panda-market-api.vercel.app/products/${itemId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}`,
       {
         method: "GET",
         headers: {
