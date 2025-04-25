@@ -73,7 +73,7 @@ export async function deleteProduct(itemId, authToken) {
       return { error: "상품 삭제에 실패했습니다." };
     }
 
-    return { success: true }; // 성공 시 별도의 데이터가 없을 수 있으므로 success: true 반환
+    return { success: true };
   } catch (error) {
     console.error("상품 삭제 중 오류 발생:", error);
     return { error: "상품 삭제 중 오류가 발생했습니다." };
