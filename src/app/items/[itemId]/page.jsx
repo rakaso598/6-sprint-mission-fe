@@ -12,17 +12,27 @@ export default function ProductDetailPage() {
   const [editedProduct, setEditedProduct] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkxLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc0NTU2MjU0MSwiZXhwIjoxNzQ1NTY0MzQxLCJpc3MiOiJzcC1wYW5kYS1tYXJrZXQifQ.ZioyYm5ZSDAConC4fXL8bOEhAeabzsYbd4W0N8DNH6g';
+  const [authToken, setAuthToken] = useState('');
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      alert('토큰이 없습니다. 로그인 페이지로 이동합니다.');
+      router.push('/signin');
+      return;
+    }
+    setAuthToken(accessToken);
+
     async function loadProduct() {
-      const data = await getProductDetail(itemId);
-      setLoading(false);
-      if (data?.error) {
-        setError(data.error);
-      } else {
+      try {
+        const data = await getProductDetail(itemId);
         setProduct(data);
         setEditedProduct(data);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        setError('상품 상세 정보를 불러오는 데 실패했습니다.');
+        console.error('상품 상세 정보 로드 오류:', err);
       }
     }
 
@@ -36,26 +46,42 @@ export default function ProductDetailPage() {
 
   const handleUpdateProduct = async () => {
     setLoading(true);
-    const result = await updateProduct(itemId, editedProduct, authToken);
-    setLoading(false);
-    if (result?.error) {
-      setError(result.error);
-    } else {
+    try {
+      // 사용자가 수정한 필드만 추출하여 요청 body 구성
+      const updatedData = {
+        name: editedProduct.name,
+        description: editedProduct.description,
+        tags: editedProduct.tags,
+        price: editedProduct.price
+        // 필요한 다른 수정 가능한 필드도 여기에 추가
+      };
+      const result = await updateProduct(itemId, updatedData, authToken);
       setProduct(result);
       setIsEditing(false);
       setError(null);
+    } catch (err) {
+      setError('상품 수정에 실패했습니다.');
+      console.error('상품 수정 오류:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDeleteProduct = async () => {
     if (window.confirm('정말로 삭제하시겠습니까?')) {
       setLoading(true);
-      const result = await deleteProduct(itemId, authToken);
-      setLoading(false);
-      if (result?.error) {
-        setError(result.error);
-      } else if (result?.success) {
-        router.push('/products');
+      try {
+        const result = await deleteProduct(itemId, authToken);
+        if (result?.success) {
+          router.push('/products');
+        } else {
+          setError('상품 삭제에 실패했습니다.');
+        }
+      } catch (err) {
+        setError('상품 삭제 중 오류가 발생했습니다.');
+        console.error('상품 삭제 오류:', err);
+      } finally {
+        setLoading(false);
       }
     }
   };

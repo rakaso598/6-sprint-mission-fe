@@ -10,14 +10,11 @@ Content-Type: application/json
 
 ### 상품 수정
 
-PATCH https://panda-market-api.vercel.app/products/681
+PATCH https://panda-market-api.vercel.app/products/701
 Content-Type: application/json
-Authorization: Basic eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkxLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc0NTU2MjU0MSwiZXhwIjoxNzQ1NTY0MzQxLCJpc3MiOiJzcC1wYW5kYS1tYXJrZXQifQ.ZioyYm5ZSDAConC4fXL8bOEhAeabzsYbd4W0N8DNH6g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0OCwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU4MTQ1OTQsImV4cCI6MTc0NTgxNjM5NCwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.joE-hkvH0-05uXVVqIsWdQYYnU7gyCXEurIKK7QXX-s
 
 {
-  "images": [
-    "https://example.com/..."
-  ],
   "tags": [
     "과자"
   ],
@@ -28,15 +25,15 @@ Authorization: Basic eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkxLCJzY29wZS
 
 ### 상품 삭제
 
-DELETE https://panda-market-api.vercel.app/products/680
+DELETE https://panda-market-api.vercel.app/products/697
 Content-Type: application/json
-Authorization: Basic eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkxLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc0NTU2MjU0MSwiZXhwIjoxNzQ1NTY0MzQxLCJpc3MiOiJzcC1wYW5kYS1tYXJrZXQifQ.ZioyYm5ZSDAConC4fXL8bOEhAeabzsYbd4W0N8DNH6g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0OCwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU4MTQ1OTQsImV4cCI6MTc0NTgxNjM5NCwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.joE-hkvH0-05uXVVqIsWdQYYnU7gyCXEurIKK7QXX-s
 
 ### 상품 생성
 
 POST https://panda-market-api.vercel.app/products/
 Content-Type: application/json
-Authorization: Basic eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTkxLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc0NTU2MjU0MSwiZXhwIjoxNzQ1NTY0MzQxLCJpc3MiOiJzcC1wYW5kYS1tYXJrZXQifQ.ZioyYm5ZSDAConC4fXL8bOEhAeabzsYbd4W0N8DNH6g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0OCwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU4MTQ1OTQsImV4cCI6MTc0NTgxNjM5NCwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.joE-hkvH0-05uXVVqIsWdQYYnU7gyCXEurIKK7QXX-s
 
 {
   "images": [

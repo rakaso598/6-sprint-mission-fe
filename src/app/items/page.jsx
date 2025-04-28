@@ -1,4 +1,4 @@
-// localhost:3000/items
+'use client';
 
 import React from 'react'
 

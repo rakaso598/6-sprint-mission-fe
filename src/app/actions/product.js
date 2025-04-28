@@ -1,4 +1,3 @@
-// app/actions/product.js
 "use server";
 
 export async function getProductDetail(itemId) {
@@ -15,16 +14,16 @@ export async function getProductDetail(itemId) {
 
     if (!response.ok) {
       console.error("상품 상세 정보 요청 실패:", response.status);
-      return {
-        error: `상품 상세 정보를 불러오는 데 실패했습니다. ${itemId}`,
-      };
+      throw new Error(
+        `상품 상세 정보를 불러오는 데 실패했습니다. 상태 코드: ${response.status}`
+      );
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
     console.error("상품 상세 정보 요청 중 오류 발생:", error);
-    return { error: "상품 상세 정보를 불러오는 중 오류가 발생했습니다." };
+    throw new Error("상품 상세 정보를 불러오는 중 오류가 발생했습니다.");
   }
 }
 
@@ -36,7 +35,7 @@ export async function updateProduct(itemId, productData, authToken) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Basic ${authToken}`,
+          Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify(productData),
       }
@@ -44,14 +43,19 @@ export async function updateProduct(itemId, productData, authToken) {
 
     if (!response.ok) {
       console.error("상품 수정 실패:", response.status);
-      return { error: "상품 수정에 실패했습니다." };
+      const errorData = await response.json(); // 실패 시 에러 응답을 읽어올 수 있도록
+      throw new Error(
+        `상품 수정에 실패했습니다. 상태 코드: ${
+          response.status
+        }, 오류: ${JSON.stringify(errorData)}`
+      );
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
     console.error("상품 수정 중 오류 발생:", error);
-    return { error: "상품 수정 중 오류가 발생했습니다." };
+    throw new Error("상품 수정 중 오류가 발생했습니다.");
   }
 }
 
@@ -63,19 +67,24 @@ export async function deleteProduct(itemId, authToken) {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Basic ${authToken}`,
+          Authorization: `Bearer ${authToken}`,
         },
       }
     );
 
     if (!response.ok) {
       console.error("상품 삭제 실패:", response.status);
-      return { error: "상품 삭제에 실패했습니다." };
+      const errorData = await response.json(); // 실패 시 에러 응답을 읽어올 수 있도록
+      throw new Error(
+        `상품 삭제에 실패했습니다. 상태 코드: ${
+          response.status
+        }, 오류: ${JSON.stringify(errorData)}`
+      );
     }
 
     return { success: true };
   } catch (error) {
     console.error("상품 삭제 중 오류 발생:", error);
-    return { error: "상품 삭제 중 오류가 발생했습니다." };
+    throw new Error("상품 삭제 중 오류가 발생했습니다.");
   }
 }
