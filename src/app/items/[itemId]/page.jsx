@@ -47,13 +47,12 @@ export default function ProductDetailPage() {
   const handleUpdateProduct = async () => {
     setLoading(true);
     try {
-      // 사용자가 수정한 필드만 추출하여 요청 body 구성
       const updatedData = {
         name: editedProduct.name,
         description: editedProduct.description,
         tags: editedProduct.tags,
         price: editedProduct.price
-        // 필요한 다른 수정 가능한 필드도 여기에 추가
+        // 필드 추가 가능
       };
       const result = await updateProduct(itemId, updatedData, authToken);
       setProduct(result);
@@ -65,6 +64,11 @@ export default function ProductDetailPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCancelEdit = () => {
+    setEditedProduct(product);
+    setIsEditing(false);
   };
 
   const handleDeleteProduct = async () => {
@@ -99,7 +103,7 @@ export default function ProductDetailPage() {
           <input type="text" name="name" value={editedProduct.name || ''} onChange={handleInputChange} />
           <textarea name="description" value={editedProduct.description || ''} onChange={handleInputChange} />
           <button onClick={handleUpdateProduct}>저장</button>
-          <button onClick={() => setIsEditing(false)}>취소</button>
+          <button onClick={handleCancelEdit}>취소</button>
         </div>
       ) : (
         <div>
