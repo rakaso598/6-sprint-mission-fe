@@ -24,8 +24,8 @@ function SigninPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "abababcd1@email.com",
-          password: "abababcd",
+          email: email,
+          password: password,
         }),
       });
       //응답
