@@ -5,11 +5,16 @@ import UserEmailInput from '../components/UserEmailInput'
 import UserPasswordInput from '../components/UserPasswordInput'
 import SubmitButton from '../components/SubmitButton'
 import { useRouter } from 'next/navigation'
+import UserNicknameInput from '../components/UserNicknameInput'
+import UserPasswordConfirmInput from '../components/UserPasswordConfirmInput'
 
 function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const router = useRouter();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,10 +28,10 @@ function SignupPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "abababcd2@email.com",
-          nickname: "abababcd2",
-          password: "abababcd",
-          passwordConfirmation: "abababcd"
+          email: email,
+          nickname: nickname,
+          password: password,
+          passwordConfirmation: passwordConfirm
         }),
       });
       //응답
@@ -54,7 +59,9 @@ function SignupPage() {
   return (
     <form onSubmit={handleSubmit}>
       <UserEmailInput value={email} onChange={(e) => setEmail(e.target.value)} />
+      <UserNicknameInput value={nickname} onChange={(e) => setNickname(e.target.value)} />
       <UserPasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
+      <UserPasswordConfirmInput value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
       <SubmitButton label={"회원가입"} />
     </form>
   )
