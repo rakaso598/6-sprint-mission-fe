@@ -17,6 +17,9 @@ export default function Docs() {
         <Link href="/items/1">/items/ID | 상품상세 페이지</Link>
       </div>
       <div className="mt-8 underline text-blue-700">
+        <Link href="/items/1/edit">/items/ID/edit | 상품상세 수정 페이지</Link>
+      </div>
+      <div className="mt-8 underline text-blue-700">
         <Link href="/community">/community | 자유게시판 페이지</Link>
       </div>
       <div className="mt-8 underline text-blue-700">
