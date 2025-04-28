@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getProductDetail, updateProduct, deleteProduct } from '@/app/actions/product';
+import DetailImage from './components/DetailImage';
+import DetailBody from './components/DetailBody';
+import DetailContact from './components/DetailContact';
 
 export default function ProductDetailPage() {
   const { itemId } = useParams();
@@ -95,55 +98,60 @@ export default function ProductDetailPage() {
   if (!product) return <div>Product not found</div>;
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
-      <p className="text-gray-700 mb-4">{product.description}</p>
-      {isEditing ? (
-        <div className="space-y-2">
-          <input
-            type="text"
-            name="name"
-            value={editedProduct.name || ''}
-            onChange={handleInputChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          <textarea
-            name="description"
-            value={editedProduct.description || ''}
-            onChange={handleInputChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          <div className="flex space-x-2">
-            <button
-              onClick={handleUpdateProduct}
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-            >
-              저장
-            </button>
-            <button
-              onClick={handleCancelEdit}
-              className="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 focus:outline-none focus:shadow-outline"
-            >
-              취소
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => setIsEditing(true)}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-          >
-            수정
-          </button>
-          <button
-            onClick={handleDeleteProduct}
-            className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline"
-          >
-            삭제
-          </button>
-        </div>
-      )}
+    <div>
+      <DetailImage />
+      <DetailBody />
+      <DetailContact />
     </div>
+    // <div className="container mx-auto p-4">
+    //   <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
+    //   <p className="text-gray-700 mb-4">{product.description}</p>
+    //   {isEditing ? (
+    //     <div className="space-y-2">
+    //       <input
+    //         type="text"
+    //         name="name"
+    //         value={editedProduct.name || ''}
+    //         onChange={handleInputChange}
+    //         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    //       />
+    //       <textarea
+    //         name="description"
+    //         value={editedProduct.description || ''}
+    //         onChange={handleInputChange}
+    //         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    //       />
+    //       <div className="flex space-x-2">
+    //         <button
+    //           onClick={handleUpdateProduct}
+    //           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+    //         >
+    //           저장
+    //         </button>
+    //         <button
+    //           onClick={handleCancelEdit}
+    //           className="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 focus:outline-none focus:shadow-outline"
+    //         >
+    //           취소
+    //         </button>
+    //       </div>
+    //     </div>
+    //   ) : (
+    //     <div className="flex space-x-2">
+    //       <button
+    //         onClick={() => setIsEditing(true)}
+    //         className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+    //       >
+    //         수정
+    //       </button>
+    //       <button
+    //         onClick={handleDeleteProduct}
+    //         className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline"
+    //       >
+    //         삭제
+    //       </button>
+    //     </div>
+    //   )}
+    // </div>
   );
 }
