@@ -6,6 +6,7 @@ import { getProductDetail } from '@/app/actions/product';
 import DetailImage from './components/DetailImage';
 import DetailBody from './components/DetailBody';
 import DetailContact from './components/DetailContact';
+import Link from 'next/link';
 
 export default function ProductDetailPage() {
   const { itemId } = useParams();
@@ -41,7 +42,7 @@ export default function ProductDetailPage() {
 
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div>{error}</div>;
   if (!product) return <div>Product not found</div>;
 
   return (
@@ -49,8 +50,11 @@ export default function ProductDetailPage() {
       <DetailImage product={product} />
       <DetailBody product={product} />
       <DetailContact product={product} />
+      <Link href="/items" className='flex justify-center'>
+        <div className='bg-blue-400 p-3 flex justify-center items-center'>
+          <div>목록으로 돌아가기</div>
+        </div>
+      </Link>
     </div>
   );
 }
-
-// 상품상세정보 렌더링

@@ -5,9 +5,18 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "sprint-fe-project.s3.ap-northeast-2.amazonaws.com",
-        pathname: "/Sprint_Mission/**",
+        pathname: "**",
       },
-      // 다른 외부 이미지 호스트가 있다면 여기에 추가합니다.
+      {
+        protocol: "https",
+        hostname: "cdn.wccftech.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "example.com",
+        pathname: "**",
+      },
     ],
   },
 };

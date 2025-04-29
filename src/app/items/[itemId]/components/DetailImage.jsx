@@ -3,7 +3,7 @@ import React from 'react'
 
 function DetailImage({ product }) {
   return (
-    <div className='border rounded-3xl border-black-500 flex justify-center items-center w-auto aspect-square m-4 relative'>
+    <div className='border rounded-3xl border-black-500 flex justify-center items-center w-auto max-w-100 aspect-square m-4 relative'>
       {product && product.images && product.images.length > 0 ? (
         <Image
           src={product.images[0]}

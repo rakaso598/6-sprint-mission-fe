@@ -10,7 +10,6 @@ function DetailContact() {
       </div>
       <div className='flex flex-col items-center'>
         <div className='m-16'>아직 문의가 없어요 ㅠ_ㅠ</div>
-        <div className='bg-blue-400 p-3'>목록으로 돌아가기</div>
       </div>
     </div>
   )

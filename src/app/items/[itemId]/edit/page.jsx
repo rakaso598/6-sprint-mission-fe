@@ -44,7 +44,7 @@ export default function ProductDetailPage() {
     setEditedProduct(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleUpdateProduct = async () => {
+  const handleUpdateProduct = async (itemId, authToken) => {
     setLoading(true);
     try {
       const updatedData = {
@@ -58,9 +58,9 @@ export default function ProductDetailPage() {
       setProduct(result);
       setIsEditing(false);
       setError(null);
-    } catch (err) {
-      setError('상품 수정에 실패했습니다.');
-      console.error('상품 수정 오류:', err);
+    } catch (error) {
+      setError(error.message);
+      console.error('상품 수정 오류:', error);
     } finally {
       setLoading(false);
     }
@@ -71,7 +71,7 @@ export default function ProductDetailPage() {
     setIsEditing(false);
   };
 
-  const handleDeleteProduct = async () => {
+  const handleDeleteProduct = async (itemId, authToken) => {
     if (window.confirm('정말로 삭제하시겠습니까?')) {
       setLoading(true);
       try {
@@ -91,11 +91,11 @@ export default function ProductDetailPage() {
   };
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div>{error}</div>;
   if (!product) return <div>Product not found</div>;
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container flex flex-col gap-4 items-center mt-40">
       <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
       <p className="text-gray-700 mb-4">{product.description}</p>
       {isEditing ? (
@@ -115,7 +115,7 @@ export default function ProductDetailPage() {
           />
           <div className="flex space-x-2">
             <button
-              onClick={handleUpdateProduct}
+              onClick={() => handleUpdateProduct(itemId, authToken)}
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
             >
               저장
@@ -137,13 +137,14 @@ export default function ProductDetailPage() {
             수정
           </button>
           <button
-            onClick={handleDeleteProduct}
+            onClick={() => handleDeleteProduct(itemId, authToken)}
             className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline"
           >
             삭제
           </button>
         </div>
       )}
+      {authToken && <div className='bg-yellow-400'>localStorage에 JWT 토큰이 존재합니다.</div>}
     </div>
   );
 }

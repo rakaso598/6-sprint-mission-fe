@@ -12,7 +12,7 @@ function DetailBody({ product }) {
             <div>{product.description}</div>
             <div className='font-bold'>상품 태그</div>
             {product && product.tags && product.tags.length > 0 && (
-              <div className='flex gap-1'>
+              <div className='flex gap-2'>
                 {product.tags.map((tag, index) => (
                   <div key={index}>#{tag}</div>
                 ))}
@@ -24,9 +24,9 @@ function DetailBody({ product }) {
                 <div>{product.ownerNickname}</div>
                 <div>{product.createdAt}</div>
               </div>
-              <div className='flex gap-1'>
+              <div className='flex gap-2'>
                 <div>♡</div>
-                <div>123</div>
+                <div>{product.favoriteCount}</div>
               </div>
             </div>
           </>
@@ -38,5 +38,3 @@ function DetailBody({ product }) {
 }
 
 export default DetailBody
-
-// product.name, product.description, product.price

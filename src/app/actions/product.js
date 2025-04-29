@@ -43,7 +43,7 @@ export async function updateProduct(itemId, productData, authToken) {
 
     if (!response.ok) {
       console.error("상품 수정 실패:", response.status);
-      const errorData = await response.json(); // 실패 시 에러 응답을 읽어올 수 있도록
+      const errorData = await response.json();
       throw new Error(
         `상품 수정에 실패했습니다. 상태 코드: ${
           response.status
@@ -55,7 +55,7 @@ export async function updateProduct(itemId, productData, authToken) {
     return data;
   } catch (error) {
     console.error("상품 수정 중 오류 발생:", error);
-    throw new Error("상품 수정 중 오류가 발생했습니다.");
+    throw new Error(error.message);
   }
 }
 
@@ -74,7 +74,7 @@ export async function deleteProduct(itemId, authToken) {
 
     if (!response.ok) {
       console.error("상품 삭제 실패:", response.status);
-      const errorData = await response.json(); // 실패 시 에러 응답을 읽어올 수 있도록
+      const errorData = await response.json();
       throw new Error(
         `상품 삭제에 실패했습니다. 상태 코드: ${
           response.status
