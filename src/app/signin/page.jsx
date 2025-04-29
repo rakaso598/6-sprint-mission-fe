@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 function SigninPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -29,15 +30,21 @@ function SigninPage() {
         }),
       });
       //응답
+
+      if (!response.ok) {
+        alert("로그인 중 오류가 발생했습니다. 재시도해주세요.")
+        throw new Error("로그인 중 오류가 발생했습니다.");
+      }
       const data = await response.json();
 
       localStorage.setItem('accessToken', data.accessToken);
-
-      alert(`${data.user.nickname}님, 환영합니다!`);
-
+      alert(`${data.user.nickname}님, 로그인을 환영합니다!`);
       router.push('/');
+
+
     } catch (error) {
       console.error('로그인 중 오류:', error)
+      setError(error.message)
     }
   }
 
@@ -46,7 +53,7 @@ function SigninPage() {
     if (accessToken) {
       router.push('/items');
     } else {
-      alert("액세스토큰이없음");
+      alert("accessToken이 없음. 로그인 해주세요.");
     }
   }, []);
 
@@ -54,6 +61,7 @@ function SigninPage() {
     <form onSubmit={handleSubmit}>
       <UserEmailInput value={email} onChange={(e) => setEmail(e.target.value)} />
       <UserPasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
+      {error && <div className='text-red-500 flex justify-center'>{error}</div>}
       <SubmitButton label={"로그인"} />
       <div className='flex justify-center'>
         <span>판다마켓이 처음이신가요?</span>

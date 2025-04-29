@@ -2,7 +2,7 @@ import React from 'react';
 
 function UserNicknameInput({ value, onChange }) {
   return (
-    <div className='flex flex-col items-center px-[16px] py-[16px]'>
+    <div className='flex flex-col items-center p-10'>
       <div>닉네임</div>
       <input
         className='w-full border border-black bg-gray-200'
@@ -10,6 +10,7 @@ function UserNicknameInput({ value, onChange }) {
         id="nickname"
         value={value}
         onChange={onChange}
+        placeholder='닉네임을 입력해주세요'
       />
     </div>
   );
