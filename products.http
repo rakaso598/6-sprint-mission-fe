@@ -33,7 +33,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0OCwic2Nvc
 
 POST https://panda-market-api.vercel.app/products/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0OCwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU5MDEzNDUsImV4cCI6MTc0NTkwMzE0NSwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.ouleyJSlvNHuUy24Ot5sXsenHoqqJWiPAbn9etZ_t0U
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0OCwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU5MTI5NjEsImV4cCI6MTc0NTkxNDc2MSwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.ki5xhFLlf8euELoh6hKxw7QJORAwmehLuvCkDwJV4TE
 
 {
   "images": [
