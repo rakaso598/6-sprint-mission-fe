@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -31,12 +32,14 @@ export default function Header() {
           </div>
         </div>
         <div className="ml-10 min-w-[88px]">
-          <Image
-            src="/images/home/homeloginbutton.png"
-            alt="로그인"
-            width={88}
-            height={42}
-          />
+          <Link href={"/signin"}>
+            <Image
+              src="/images/home/homeloginbutton.png"
+              alt="로그인"
+              width={88}
+              height={42}
+            />
+          </Link>
         </div>
       </div>
     </header>

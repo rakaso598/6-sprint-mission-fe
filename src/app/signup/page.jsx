@@ -1,44 +1,73 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import UserEmailInput from '../components/UserEmailInput'
 import UserPasswordInput from '../components/UserPasswordInput'
 import SubmitButton from '../components/SubmitButton'
+import { useRouter } from 'next/navigation'
+import UserNicknameInput from '../components/UserNicknameInput'
+import UserPasswordConfirmInput from '../components/UserPasswordConfirmInput'
 
 function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [error, setError] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
       //요청
-      const response = fetch('https://panda-market-api.vercel.app/auth/signUp', {
+      const response = await fetch('https://panda-market-api.vercel.app/auth/signUp', {
         method: 'POST',
+        credentials: 'omit',
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "abababcd1@email.com",
-          nickname: "abababcd1",
-          password: "abababcd",
-          passwordConfirmation: "abababcd"
+          email: email,
+          nickname: nickname,
+          password: password,
+          passwordConfirmation: passwordConfirm
         }),
       });
       //응답
-      const data = await response.json();
-      console.log('회원가입 성공:', data);
+      if (!response.ok) {
+        alert("회원가입 중 오류가 발생했습니다. 재시도해주세요.")
+        throw new Error("회원가입 중 오류가 발생했습니다.");
+      }
 
+      const data = await response.json();
+      localStorage.setItem('accessToken', data.accessToken);
+      alert(`${data.user.nickname}님, 로그인을 환영합니다!`);
+
+      router.push('/');
     } catch (error) {
       console.error('회원가입 요청 중 오류:', error)
+      setError(error.message)
     }
   }
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      router.push('/items');
+    } else {
+      alert("accessToken이 없음. 회원가입 이후 로그인 해주세요.");
+    }
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
       <UserEmailInput value={email} onChange={(e) => setEmail(e.target.value)} />
+      <UserNicknameInput value={nickname} onChange={(e) => setNickname(e.target.value)} />
       <UserPasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
+      <UserPasswordConfirmInput value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
+      {error && <div className='text-red-500 flex justify-center'>{error}</div>}
       <SubmitButton label={"회원가입"} />
     </form>
   )

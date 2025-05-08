@@ -5,7 +5,7 @@ function SubmitButton({ label }) {
     <div className='flex justify-center'>
       <button
         type="submit"
-        className='w-20 h-12 bg-blue-400 border boder-black'
+        className='w-24 h-12 bg-blue-400 border boder-black m-10'
       >
         {label}
       </button>
