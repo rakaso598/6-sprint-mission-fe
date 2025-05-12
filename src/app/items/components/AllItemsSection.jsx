@@ -16,11 +16,11 @@ const SearchBarWrapper = styled.div`
   margin-bottom: 16px;
 `;
 
-const SearchIconPlaceholder = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: #ccc;
-`;
+// const SearchIconPlaceholder = styled.div`
+//   width: 20px;
+//   height: 20px;
+//   background-color: #ccc;
+// `;
 
 const SearchInput = styled.input`
   padding: 8px;
