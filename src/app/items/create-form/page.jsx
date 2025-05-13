@@ -8,7 +8,7 @@ function CreateForm() {
   const [price, setPrice] = useState('');
   const router = useRouter();
 
-  const handleRegister = async () => { // 버튼 클릭 시 실행될 함수
+  const handleRegister = async () => {
     const productData = {
       name,
       price: parseInt(price),
@@ -19,7 +19,7 @@ function CreateForm() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
         },
         body: JSON.stringify(productData),
       });
@@ -29,11 +29,9 @@ function CreateForm() {
       } else {
         const errorData = await response.json();
         console.error('상품 등록 실패:', errorData);
-        // 에러 처리
       }
     } catch (error) {
       console.error('상품 등록 요청 중 오류:', error);
-      // 네트워크 오류 처리
     }
   };
 

@@ -2,7 +2,7 @@ import axiosLib from "axios";
 import NProgress from "nprogress";
 import { clearTokens, getTokens, setTokens } from "../utils/authToken";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const axios = axiosLib.create({
   baseURL: API_BASE_URL,

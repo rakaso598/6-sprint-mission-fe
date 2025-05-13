@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../../../api/products";
 import ItemCard from "./ItemCard";
 import DropdownMenu from "../../../components/UI/DropdownMenu";
-import PaginationBar from "../../../components/UI/PaginationBar";
 import styled from "styled-components";
 
 const PAGE_SIZE = 12;
@@ -15,12 +14,6 @@ const SearchBarWrapper = styled.div`
   gap: 8px;
   margin-bottom: 16px;
 `;
-
-// const SearchIconPlaceholder = styled.div`
-//   width: 20px;
-//   height: 20px;
-//   background-color: #ccc;
-// `;
 
 const SearchInput = styled.input`
   padding: 8px;
@@ -34,12 +27,6 @@ const ItemCardList = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
-`;
-
-const PaginationWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
 `;
 
 const LoadingMessage = styled.div`
@@ -56,25 +43,17 @@ const ErrorMessage = styled.div`
 
 function AllItemsSection() {
   const [orderBy, setOrderBy] = useState("recent");
-  const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
 
   const { data, isFetching, isError, error } = useQuery({
-    queryKey: ["products", page, orderBy, keyword],
-    queryFn: () => getProducts({ orderBy, page, pageSize: PAGE_SIZE, keyword }),
+    queryKey: ["products", orderBy, keyword], // page 제거
+    queryFn: () => getProducts({ orderBy, pageSize: PAGE_SIZE, keyword }), // page 파라미터 제거
     placeholderData: (prev) => prev,
     refetchInterval: 60 * 1000,
   });
 
   const handleSearch = (e) => {
     setKeyword(e.target.value);
-    setPage(1);
-  };
-
-  const handlePageChange = (newPage) => {
-    if (data && newPage >= 1 && newPage <= Math.ceil(data.totalCount / PAGE_SIZE)) {
-      setPage(newPage);
-    }
   };
 
   return (
@@ -102,22 +81,13 @@ function AllItemsSection() {
       ) : isError ? (
         <ErrorMessage>상품 목록을 불러오는 중 오류가 발생했습니다: {error?.message || '알 수 없는 오류'}</ErrorMessage>
       ) : data ? (
-        <>
-          <ItemCardList>
-            {data.list.map((item) => (
-              <Link href={`/items/${item.id}`} key={`market-item-${item.id}`}>
-                <ItemCard item={item} />
-              </Link>
-            ))}
-          </ItemCardList>
-          <PaginationWrapper>
-            <PaginationBar
-              totalPageNum={Math.ceil(data.totalCount / PAGE_SIZE)}
-              activePageNum={page}
-              onPageChange={handlePageChange}
-            />
-          </PaginationWrapper>
-        </>
+        <ItemCardList>
+          {data.list.map((item) => (
+            <Link href={`/items/${item.id}`} key={`market-item-${item.id}`}>
+              <ItemCard item={item} />
+            </Link>
+          ))}
+        </ItemCardList>
       ) : (
         <LoadingMessage>표시할 상품이 없습니다.</LoadingMessage>
       )}
