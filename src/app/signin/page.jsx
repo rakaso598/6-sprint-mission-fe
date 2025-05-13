@@ -18,7 +18,7 @@ function SigninPage() {
 
     try {
       //요청
-      // const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL_LOCAL;
+      // const baseURL = process.env.NEXT_PUBLIC_API_URL;
       // const signinEndpoint = process.env.NEXT_PUBLIC_AUTH_SIGNIN_ENDPOINT;
       // const apiUrl = `${baseURL}${signinEndpoint}`;
       const response = await fetch('http://localhost:5050/auth/signIn', {

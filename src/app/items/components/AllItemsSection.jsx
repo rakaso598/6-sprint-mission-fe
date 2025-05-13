@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
-import { getProducts } from "../../../api/products";
+import axios from "../../../api/axios";
 import ItemCard from "./ItemCard";
 import DropdownMenu from "../../../components/UI/DropdownMenu";
 import styled from "styled-components";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 10;
 
 const SearchBarWrapper = styled.div`
   display: flex;
@@ -44,13 +43,32 @@ const ErrorMessage = styled.div`
 function AllItemsSection() {
   const [orderBy, setOrderBy] = useState("recent");
   const [keyword, setKeyword] = useState("");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const { data, isFetching, isError, error } = useQuery({
-    queryKey: ["products", orderBy, keyword], // page 제거
-    queryFn: () => getProducts({ orderBy, pageSize: PAGE_SIZE, keyword }), // page 파라미터 제거
-    placeholderData: (prev) => prev,
-    refetchInterval: 60 * 1000,
-  });
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get("/products", {
+          params: {
+            orderBy,
+            pageSize: PAGE_SIZE,
+            keyword,
+          },
+        });
+        setProducts(response.data);
+      } catch (e) {
+        setError(e.message || "상품 목록을 불러오는 중 오류가 발생했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [orderBy, keyword]);
 
   const handleSearch = (e) => {
     setKeyword(e.target.value);
@@ -59,13 +77,12 @@ function AllItemsSection() {
   return (
     <div className="allItemsContainer">
       <div className="allItemsSectionHeader">
-        <h1 className="sectionTitle mb-2 text-2xl">판매 중인 상품</h1>
-        <Link href="/registration" className="loginLink button bg-blue-400 rounded-xl">
+        <h1 className="sectionTitle mb-4 text-2xl">판매 중인 상품</h1>
+        <Link href="/items/form" className="loginLink button bg-blue-400 rounded-xl p-2">
           상품 등록하기
         </Link>
       </div>
-
-      <div className="allItemsSectionHeader">
+      <div className="allItemsSectionHeader mt-5 mb-4">
         <SearchBarWrapper>
           <div><DropdownMenu onSortSelection={setOrderBy} /></div>
           <SearchInput
@@ -75,14 +92,13 @@ function AllItemsSection() {
           />
         </SearchBarWrapper>
       </div>
-
-      {isFetching ? (
+      {loading ? (
         <LoadingMessage>상품 목록을 불러오는 중입니다...</LoadingMessage>
-      ) : isError ? (
-        <ErrorMessage>상품 목록을 불러오는 중 오류가 발생했습니다: {error?.message || '알 수 없는 오류'}</ErrorMessage>
-      ) : data ? (
+      ) : error ? (
+        <ErrorMessage>{error}</ErrorMessage>
+      ) : products && products.length > 0 ? (
         <ItemCardList>
-          {data.list.map((item) => (
+          {products.map((item) => (
             <Link href={`/items/${item.id}`} key={`market-item-${item.id}`}>
               <ItemCard item={item} />
             </Link>

@@ -1,6 +1,6 @@
 import axiosLib from "axios";
 import NProgress from "nprogress";
-import { clearTokens, getTokens, setTokens } from "../utils/authToken";
+import { clearTokens, getTokens, setTokens } from "../utils/authToken.js";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 

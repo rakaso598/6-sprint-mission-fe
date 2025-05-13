@@ -1,4 +1,4 @@
-import axios from "./axios";
+import axios from "./axios.js";
 
 export async function getProducts({
   orderBy = "recent",
