@@ -22,7 +22,10 @@ function SignupPage() {
 
     try {
       //요청
-      const response = await fetch('https://panda-market-api.vercel.app/auth/signUp', {
+      // const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL_LOCAL;
+      // const signupEndpoint = process.env.NEXT_PUBLIC_AUTH_SIGNUP_ENDPOINT;
+      // const apiUrl = `${baseURL}${signupEndpoint}`;
+      const response = await fetch('http://localhost:5050/auth/signUp', {
         method: 'POST',
         credentials: 'omit',
         headers: {
