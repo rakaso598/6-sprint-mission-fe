@@ -22,10 +22,8 @@ function SignupPage() {
 
     try {
       //요청
-      // const baseURL = process.env.NEXT_PUBLIC_API_URL;
-      // const signupEndpoint = process.env.NEXT_PUBLIC_AUTH_SIGNUP_ENDPOINT;
-      // const apiUrl = `${baseURL}${signupEndpoint}`;
-      const response = await fetch('http://localhost:5050/auth/signUp', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const response = await fetch(`${apiUrl}/auth/signIn`, {
         method: 'POST',
         credentials: 'omit',
         headers: {

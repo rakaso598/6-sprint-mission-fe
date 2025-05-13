@@ -18,10 +18,8 @@ function SigninPage() {
 
     try {
       //요청
-      // const baseURL = process.env.NEXT_PUBLIC_API_URL;
-      // const signinEndpoint = process.env.NEXT_PUBLIC_AUTH_SIGNIN_ENDPOINT;
-      // const apiUrl = `${baseURL}${signinEndpoint}`;
-      const response = await fetch('http://localhost:5050/auth/signIn', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const response = await fetch(`${apiUrl}/auth/signIn`, {
         method: 'POST',
         credentials: 'omit',
         headers: {

@@ -10,13 +10,16 @@ function CreateForm() {
   const router = useRouter();
 
   const handleRegister = async () => {
+
+
     const productData = {
       name,
       price: parseInt(price),
     };
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     try {
-      const response = await fetch('http://localhost:5050/products', {
+      const response = await fetch(`${apiUrl}/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
