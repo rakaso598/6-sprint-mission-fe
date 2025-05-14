@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-function CreateForm() {
+function CreateItem() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -77,4 +77,4 @@ function CreateForm() {
   );
 }
 
-export default CreateForm;
+export default CreateItem;
