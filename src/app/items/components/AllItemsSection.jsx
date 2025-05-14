@@ -5,7 +5,7 @@ import ItemCard from "./ItemCard";
 import DropdownMenu from "../../../components/UI/DropdownMenu";
 import styled from "styled-components";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 12;
 
 const SearchBarWrapper = styled.div`
   display: flex;
@@ -78,7 +78,7 @@ function AllItemsSection() {
     <div className="allItemsContainer">
       <div className="allItemsSectionHeader">
         <h1 className="sectionTitle mb-4 text-2xl">판매 중인 상품</h1>
-        <Link href="/items/form" className="loginLink button bg-blue-400 rounded-xl p-2">
+        <Link href="/items/new" className="loginLink button bg-blue-400 rounded-xl p-2">
           상품 등록하기
         </Link>
       </div>
