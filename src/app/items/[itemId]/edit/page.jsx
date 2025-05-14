@@ -1,17 +1,23 @@
 'use client';
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getProductDetail, updateProduct, deleteProduct } from '@/app/actions/product';
 
 export default function ProductDetailPage() {
   const { itemId } = useParams();
   const router = useRouter();
+  const [product, setProduct] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedProduct, setEditedProduct] = useState({});
-  const [authToken, setAuthToken] = useState('');
-  const queryClient = useQueryClient();
+  const [accessToken, setAccessToken] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [updateError, setUpdateError] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState(null);
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -20,59 +26,70 @@ export default function ProductDetailPage() {
       router.push('/signin');
       return;
     }
-    setAuthToken(accessToken);
+    setAccessToken(accessToken);
   }, [router]);
 
-  // useQuery 사용
-  const { data: product, isLoading, error } = useQuery({
-    queryKey: ['product', itemId],
-    queryFn: () => getProductDetail(itemId),
-    onSuccess: (data) => {
-      setEditedProduct(data);
-    },
-    enabled: !!itemId && !!authToken,
-  });
-
-  // updateMutation
-  const updateMutation = useMutation({
-    mutationFn: (updatedData) => updateProduct(itemId, updatedData, authToken),
-    onSuccess: () => {  //수정 후 캐시 무효화
-      queryClient.invalidateQueries(['product', itemId]);
-      setIsEditing(false);
-    },
-    onError: (error) => {
-      console.error('상품 수정 오류', error);
-      alert('상품 수정에 실패했습니다.');
-    },
-  });
-
-  // deleteMutation
-  const deleteMutation = useMutation({
-    mutationFn: () => deleteProduct(itemId, authToken),
-    onSuccess: () => {
-      router.push('/products'); //성공시 '/products'로 이동
-    },
-    onError: (error) => {
-      console.error('상품 삭제 오류', error);
-      alert('상품 삭제에 실패했습니다.');
-    },
-  });
+  useEffect(() => {
+    if (itemId && accessToken) {
+      setLoading(true);
+      fetch(`${apiUrl}/products/${itemId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setProduct(data);
+          setEditedProduct(data);
+          setLoading(false);
+        })
+        .catch((e) => {
+          setError(e);
+          setLoading(false);
+        });
+    }
+  }, [itemId, accessToken]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleUpdateProduct = () => { // async 제거
-    if (authToken) {
-      const updatedData = {
-        name: editedProduct.name,
-        description: editedProduct.description,
-        tags: editedProduct.tags,
-        price: editedProduct.price,
-        // 필드 추가 가능
-      };
-      updateMutation.mutate(updatedData); // await 제거
+  const handleUpdateProduct = async () => {
+    if (accessToken && editedProduct) {
+      setUpdateLoading(true);
+      setUpdateError(null);
+      try {
+        const updatedData = {
+          name: editedProduct.name,
+          price: editedProduct.price,
+          // 필드가 필요하다면 추가
+        };
+
+        const response = await fetch(`${apiUrl}/products/${itemId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(updatedData),
+        });
+        if (response.ok) {
+          // 서버가 204 No Content 응답을 보낸 경우
+          router.push('/items'); // 상품 목록 페이지로 이동
+        }
+      } catch (e) {
+        console.error('상품 수정 오류', e);
+        setUpdateError(e.message || '상품 수정에 실패했습니다.');
+        alert('상품 수정에 실패했습니다.');
+      } finally {
+        setUpdateLoading(false);
+      }
     }
   };
 
@@ -81,17 +98,37 @@ export default function ProductDetailPage() {
     setIsEditing(false);
   };
 
-  const handleDeleteProduct = () => { // async 제거
-    if (window.confirm('정말로 삭제하시겠습니까?') && authToken) {
-      deleteMutation.mutate(); // await 제거
+  const handleDeleteProduct = async () => {
+    if (window.confirm('정말로 삭제하시겠습니까?') && accessToken) {
+      setDeleteLoading(true);
+      setDeleteError(null);
+      try {
+        const response = await fetch(`${apiUrl}/products/${itemId}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData?.message || `HTTP error! status: ${response.status}`);
+        }
+        router.push('/items');
+      } catch (e) {
+        console.error('상품 삭제 오류', e);
+        setDeleteError(e.message || '상품 삭제에 실패했습니다.');
+        alert('상품 삭제에 실패했습니다.');
+      } finally {
+        setDeleteLoading(false);
+      }
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
   if (error)
     return (
       <div>{error?.message || '상품 정보를 불러오는 데 실패했습니다.'}</div>
-    ); //error 메세지
+    );
   if (!product) return <div>Product not found</div>;
 
   return (
@@ -116,11 +153,11 @@ export default function ProductDetailPage() {
           <div className="flex space-x-2">
             <button
               onClick={handleUpdateProduct}
-              disabled={updateMutation.isLoading} // react-query 관련 코드: 뮤테이션 로딩 중 버튼 비활성화
-              className={`bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline ${updateMutation.isLoading ? 'opacity-50 cursor-not-allowed' : '' // react-query 관련 코드: 로딩 중 스타일 변경
+              disabled={updateLoading}
+              className={`bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline ${updateLoading ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
             >
-              {updateMutation.isLoading ? '저장 중...' : '저장'}
+              {updateLoading ? '저장 중...' : '저장'}
             </button>
             <button
               onClick={handleCancelEdit}
@@ -129,8 +166,8 @@ export default function ProductDetailPage() {
               취소
             </button>
           </div>
-          {updateMutation.isError && (
-            <div className="text-red-500">{updateMutation.error?.message}</div>
+          {updateError && (
+            <div className="text-red-500">{updateError}</div>
           )}
         </div>
       ) : (
@@ -143,18 +180,18 @@ export default function ProductDetailPage() {
           </button>
           <button
             onClick={handleDeleteProduct}
-            disabled={deleteMutation.isLoading} // react-query 관련 코드: 뮤테이션 로딩 중 버튼 비활성화
-            className={`bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline ${deleteMutation.isLoading ? 'opacity-50 cursor-not-allowed' : '' // react-query 관련 코드: 로딩 중 스타일 변경
+            disabled={deleteLoading}
+            className={`bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline ${deleteLoading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
           >
-            {deleteMutation.isLoading ? '삭제 중...' : '삭제'}
+            {deleteLoading ? '삭제 중...' : '삭제'}
           </button>
-          {deleteMutation.isError && (
-            <div className="text-red-500">{deleteMutation.error?.message}</div>
+          {deleteError && (
+            <div className="text-red-500">{deleteError}</div>
           )}
         </div>
       )}
-      {authToken && (
+      {accessToken && (
         <div className="bg-yellow-400">localStorage에 JWT 토큰이 존재합니다.</div>
       )}
     </div>

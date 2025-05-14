@@ -3,15 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-function CreateItem() {
+function CreateForm() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   const handleRegister = async () => {
-
-
     const productData = {
       name,
       price: parseInt(price),
@@ -77,4 +75,4 @@ function CreateItem() {
   );
 }
 
-export default CreateItem;
+export default CreateForm;
