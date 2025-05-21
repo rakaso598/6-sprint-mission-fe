@@ -5,7 +5,7 @@
  * GET /products/
  */
 export async function GET() {
-  const apiUrl = "https://panda-market-api.vercel.app/products/";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   try {
     const response = await fetch(apiUrl);

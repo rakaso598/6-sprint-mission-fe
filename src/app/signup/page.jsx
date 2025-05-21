@@ -6,13 +6,13 @@ import UserPasswordInput from '../components/UserPasswordInput'
 import SubmitButton from '../components/SubmitButton'
 import { useRouter } from 'next/navigation'
 import UserNicknameInput from '../components/UserNicknameInput'
-import UserPasswordConfirmInput from '../components/UserPasswordConfirmInput'
+// import UserPasswordConfirmInput from '../components/UserPasswordConfirmInput'
 
 function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  // const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
 
@@ -22,17 +22,18 @@ function SignupPage() {
 
     try {
       //요청
-      const response = await fetch('https://panda-market-api.vercel.app/auth/signUp', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const response = await fetch(`${apiUrl}/auth/signIn`, {
         method: 'POST',
         credentials: 'omit',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: email,
           nickname: nickname,
+          email: email,
           password: password,
-          passwordConfirmation: passwordConfirm
+          // passwordConfirmation: passwordConfirm
         }),
       });
       //응답
@@ -42,8 +43,9 @@ function SignupPage() {
       }
 
       const data = await response.json();
+
       localStorage.setItem('accessToken', data.accessToken);
-      alert(`${data.user.nickname}님, 로그인을 환영합니다!`);
+      alert(`${data}님, 회원가입을 환영합니다!`);
 
       router.push('/');
     } catch (error) {
@@ -66,7 +68,7 @@ function SignupPage() {
       <UserEmailInput value={email} onChange={(e) => setEmail(e.target.value)} />
       <UserNicknameInput value={nickname} onChange={(e) => setNickname(e.target.value)} />
       <UserPasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
-      <UserPasswordConfirmInput value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
+      {/* <UserPasswordConfirmInput value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} /> */}
       {error && <div className='text-red-500 flex justify-center'>{error}</div>}
       <SubmitButton label={"회원가입"} />
     </form>

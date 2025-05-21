@@ -1,18 +1,10 @@
 'use client';
 
 import React from 'react'
-import ItemImage from './components/ItemImage';
-import ItemTitle from './components/ItemTitle';
+import AllItemsSection from './components/AllItemsSection';
 
 function ItemsPage() {
-  return (
-    <div>
-      <div>
-        <ItemImage />
-        <ItemTitle />
-      </div>
-    </div>
-  )
+  return <AllItemsSection />;
 }
 
 export default ItemsPage

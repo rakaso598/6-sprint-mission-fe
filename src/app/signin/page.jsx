@@ -18,7 +18,8 @@ function SigninPage() {
 
     try {
       //요청
-      const response = await fetch('https://panda-market-api.vercel.app/auth/signIn', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const response = await fetch(`${apiUrl}/auth/signIn`, {
         method: 'POST',
         credentials: 'omit',
         headers: {
@@ -40,7 +41,6 @@ function SigninPage() {
       localStorage.setItem('accessToken', data.accessToken);
       alert(`${data.user.nickname}님, 로그인을 환영합니다!`);
       router.push('/');
-
 
     } catch (error) {
       console.error('로그인 중 오류:', error)
