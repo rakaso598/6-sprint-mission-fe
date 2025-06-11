@@ -1,5 +1,5 @@
 import axios from "./axios";
-import User from "../interface/user";
+import User from "../type/user";
 
 export async function signUp(
   email: User["email"],

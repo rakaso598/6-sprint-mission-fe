@@ -1,6 +1,7 @@
 import Image from "next/image";
+import Post from "../../type/post";
 
-export default function BestPost({ post }) {
+export default function BestPost({ post }: { post: Post }) {
   return (
     <div className="w-full h-[198px] rounded-md bg-[#F9FAFB]">
       <div className="w-full flex ml-[24px]">
