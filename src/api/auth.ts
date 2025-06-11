@@ -1,11 +1,12 @@
 import axios from "./axios";
+import User from "../interface/user";
 
-export async function signUp({
-  email,
-  nickname,
-  password,
-  passwordConfirmation,
-}) {
+export async function signUp(
+  email: User["email"],
+  nickname: User["nickname"],
+  password: User["password"],
+  passwordConfirmation: User["passwordConfirmation"]
+) {
   const response = await axios.post(`/auth/signUp`, {
     email,
     nickname,
@@ -16,7 +17,7 @@ export async function signUp({
   return { user };
 }
 
-export async function signIn(data) {
+export async function signIn(data: User) {
   const response = await axios.post(`/auth/signIn`, data);
   const { user } = response.data;
   return { user };

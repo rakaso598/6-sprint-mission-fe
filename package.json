@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@prisma/client": "^6.9.0",
     "@tailwindcss/postcss": "^4",
     "@tanstack/react-query": "^5.74.7",
     "@types/node": "^24.0.0",

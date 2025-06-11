@@ -1,4 +1,7 @@
-import axiosLib from "axios";
+import axiosLib, {
+  AxiosRequestConfig,
+  InternalAxiosRequestConfig,
+} from "axios";
 import NProgress from "nprogress";
 import { clearTokens, getTokens, setTokens } from "../utils/authToken.js";
 
@@ -11,7 +14,7 @@ const axios = axiosLib.create({
 });
 
 axios.interceptors.request.use(
-  function (config) {
+  function (config: any) {
     NProgress.start();
     const { accessToken } = getTokens();
     if (accessToken) {
