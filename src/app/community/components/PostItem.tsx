@@ -1,6 +1,7 @@
 import Image from "next/image";
+import Post from "../../../interface/post";
 
-export default function PostItem({ post }) {
+export default function PostItem({ post }: { post: Post }) {
   return (
     <div className="flex flex-col">
       <div className="bg-[#FCFCFC] w-full h-[136px] border-b border-gray-300">

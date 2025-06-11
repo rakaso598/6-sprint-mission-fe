@@ -1,4 +1,11 @@
-export async function GET(request, { params }) {
+type TArticleParams = {
+  articleId: string;
+};
+
+export async function GET(
+  request: Request,
+  { params }: { params: TArticleParams }
+) {
   const { articleId } = params;
 
   try {
