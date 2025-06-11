@@ -8,11 +8,11 @@ function CreateArticleForm() {
   const [content, setContent] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-  const handleTitleChange = (event) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
 
-  const handleContentChange = (event) => {
+  const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContent(event.target.value);
   };
 

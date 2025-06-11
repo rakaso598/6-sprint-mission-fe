@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useAuth } from "../../contexts/AuthContext";
-import LinkButton from "../UI/LinkButton";
+import LinkButton from "../UI/LinkButton.tsdx";
 import { ReactComponent as DefaultProfileImage } from "../../assets/images/ui/ic_profile.svg";
 import { ReactComponent as Logo } from "../../assets/images/logo/logo.svg";
 import { ReactComponent as TextLogo } from "../../assets/images/logo/text_logo.svg";

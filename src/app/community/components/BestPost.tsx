@@ -1,6 +1,7 @@
 import Image from "next/image";
+import Post from "../../../type/post";
 
-export default function BestPost({ post }) {
+export default function BestPost({ post }: { post: Post }) {
   return (
     <div className="w-full h-[198px] rounded-md bg-[#F9FAFB]">
       <div className="w-full flex ml-[24px]">
@@ -14,10 +15,10 @@ export default function BestPost({ post }) {
       <div className="w-full h-[165px] flex flex-col items-center justify-center">
         <div className="w-full">
           <div className="flex w-full h-[120px] items-start justify-between pr-[24px]">
-            <div className="text-[18px] ml-[24px] mr-[24px] w-[240px] h-[136px] text-base font-semibold">
+            <div className="min-w-[100px] text-[18px] ml-[24px] mr-[24px] w-[240px] h-[136px] text-base font-semibold">
               {post.title}
             </div>
-            <div>
+            <div className="min-w-[72px] min-h-[72px]">
               <Image
                 src={post.imageUrl}
                 alt={post.altText}
@@ -29,9 +30,11 @@ export default function BestPost({ post }) {
           </div>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <div className="font-medium text-sm ml-[24px]">{post.author}</div>
+              <div className="font-medium text-sm ml-[24px] min-w-[70px]">
+                {post.author}
+              </div>
               <div className="flex gap-2 items-center ml-2">
-                <div>
+                <div className=" min-w-[20px] min-h-[20px]">
                   <Image
                     src="/images/home/hearticon.png"
                     alt="좋아요"
