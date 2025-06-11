@@ -1,6 +1,6 @@
 "use server";
 
-export async function getProductDetail(itemId) {
+export async function getProductDetail(itemId: number) {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}`,
@@ -27,7 +27,11 @@ export async function getProductDetail(itemId) {
   }
 }
 
-export async function updateProduct(itemId, productData, authToken) {
+export async function updateProduct(
+  itemId: number,
+  productData: {},
+  authToken: string
+) {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}`,
@@ -53,13 +57,17 @@ export async function updateProduct(itemId, productData, authToken) {
 
     const data = await response.json();
     return data;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("상품 수정 중 오류 발생:", error);
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("상품 수정 중 오류 발생:");
+    }
   }
 }
 
-export async function deleteProduct(itemId, authToken) {
+export async function deleteProduct(itemId: number, authToken: string) {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products/${itemId}`,
