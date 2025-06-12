@@ -1,0 +1,50 @@
+### 상품 목록조회
+
+GET https://panda-market-api.vercel.app/products/
+Content-Type: application/json
+
+### 상품 상세조회
+
+GET https://panda-market-api.vercel.app/products/1
+Content-Type: application/json
+
+### 상품 수정
+
+PATCH https://panda-market-api.vercel.app/products/703
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0OCwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU5MDczOTIsImV4cCI6MTc0NTkwOTE5MiwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.XPhid5KeOpuJhZ2rLF5Bv5GeBmbRYvfWzpeFPl13yqk
+
+{
+  "tags": [
+    "과자"
+  ],
+  "price": 45000,
+  "description": "감자칩이에용",
+  "name": "포테토칩"
+}
+
+### 상품 삭제
+
+DELETE https://panda-market-api.vercel.app/products/697
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0OCwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU5MDEzNDUsImV4cCI6MTc0NTkwMzE0NSwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.ouleyJSlvNHuUy24Ot5sXsenHoqqJWiPAbn9etZ_t0U
+
+### 상품 생성
+
+POST https://panda-market-api.vercel.app/products/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0OCwic2NvcGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDU5MTI5NjEsImV4cCI6MTc0NTkxNDc2MSwiaXNzIjoic3AtcGFuZGEtbWFya2V0In0.ki5xhFLlf8euELoh6hKxw7QJORAwmehLuvCkDwJV4TE
+
+{
+  "images": [
+    "https://example.com/..."
+  ],
+  "tags": [
+    "전자제품"
+  ],
+  "price": 0,
+  "description": "string",
+  "name": "상품 이름"
+}
+
+###

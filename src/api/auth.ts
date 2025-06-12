@@ -1,0 +1,30 @@
+import axios from "./axios";
+import User from "../type/user";
+
+export async function signUp(
+  email: User["email"],
+  nickname: User["nickname"],
+  password: User["password"],
+  passwordConfirmation: User["passwordConfirmation"]
+) {
+  const response = await axios.post(`/auth/signUp`, {
+    email,
+    nickname,
+    password,
+    passwordConfirmation,
+  });
+  const { user } = response.data;
+  return { user };
+}
+
+export async function signIn(data: User) {
+  const response = await axios.post(`/auth/signIn`, data);
+  const { user } = response.data;
+  return { user };
+}
+
+export async function getMe() {
+  const response = await axios.get(`/users/me`);
+  const user = response.data;
+  return user;
+}

@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 프로젝트 작업 내역 (날짜별, 시간별 정리)
 
-## Getting Started
+**2025년 04월 24일**
 
-First, run the development server:
+- (미정) 하드코딩된 BODY -> form 인풋값으로 개선 필요 (핵심 기능): 작업 시작 필요.
+- (미정) 상품 상세 페이지 -> /items 페이지 및 /products API 라우터 관련 기능들 구현 필요 (핵심 기능): 작업 시작 필요.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**2025년 04월 25일**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- (미정) /products rosute.js CRUD 작성: 완료.
+- (미정) 상품 상세 페이지 page.jsx 컴포넌트 만들기 -> /items/{itemId}/page.jsx 만들고 화면 만들기 -> 상품 API는 [2]의 route.js 사용 (특이사항: '로컬스토리지' 인가된 사용자만 사용 가능):
+  - (미정) 상품 상세 페이지 (`page.jsx`)에서 `route.js` (`.env.development` 값 사용) 연동 및 작동 확인.
+  - (미정) 쿠키 읽기, 수정, 삭제 기능 확인.
+  - (미정) **확인 필요:** 토큰값이 하드코딩되어 있다면 로컬스토리지에서 읽도록 수정 필요.
+- (미정) **추가 작업:** 클라이언트 컴포넌트 디자인, 로그인/회원가입 폼 입력값 처리 확인 필요.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**2025년 04월 28일**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- (미정) 회원가입, 로그인 기능 form 인풋값을 통해 가입되는거 확인 완료: 로그인 및 회원가입 기능 확인 완료 (디자인 제외).
+- (미정) 상품 상세 페이지 "수정" 기능 오류 수정: `handleUpdateProduct`에서 불필요한 필드 사용 없이 필요한 필드만 요청하여 수정 성공.
+- (18:28) 상품 상세 페이지 디자인 구현 필요: 골격 완성.
+- (미정) 상품 상세 페이지 디자인 구현 필요: 이미지 넣기 등 활용 가능성 확인.
+- (미정) 상품 상세 페이지 디자인 구현 필요: API 연결 및 데이터 렌더링 우선 수행 권장.
+- (미정) 커밋 컨벤션 개선 예정: `[ 타입(스코프): 제목 - (진행상황) ]` 형식의 My 컨벤션 사용 시작.
+- (미정) Atomic Design 활용 검토: `[itemId]page.jsx` 상세 페이지에 부분적으로 적용 (완전 작은 atom 컨테이너부터 시작하지 않고 5개 덩어리로 분할 작업). 숙련도 향상 필요.
 
-## Learn More
+**2025년 04월 29일**
 
-To learn more about Next.js, take a look at the following resources:
+- (오후 13:31) 로그인 화면 UI 개선: 진행 중 (OK).
+- (오후 13:31) 상품 상세 API 연결하여 데이터를 렌더링하여 표현: 완료 (OK).
+- (미정) edit 폼 구현 완료: JWT 유효성 검사 기반 작동 확인.
+- (오후 15:44) 상세 상품 edit page.jsx에서 React Query 사용: 작업 예정.
+- (오후 15:44) 목록 불러오기 만들기 (/items): 아직 안 만듦.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**2025년 05월 08일**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- (미정) 중고마켓 화면 (/items/page.jsx) 디자인 시작.
+- (미정) 디자인 작업 후 Product GET API에서 가져온 이미지로 변경 예정.
+- (미정) 백엔드 `multer` 작업 우선 시작: `app.js`에 `/upload` 엔드포인트 구현 및 요청-응답 테스트 진행.
+- (미정) `/upload` 응답에 파일 주소 포함: 완료.
+- (오후 15:28) 미션 9 정답 참고하여 중고마켓 화면 (판매 중인 상품 화면) 보완: 디자인 진행 중.
 
-## Deploy on Vercel
+**2025년 05월 12일**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- (미정) **작업 내용 (백엔드):** 상품 조회, 목록 조회, 상품 수정, 상품 삭제, 상품 생성, 이미지 업로드-url 받기 백엔드 REST Client 테스트 완료.
+- (미정) **프론트엔드에서 수행해야 하는 작업:** 상품 이미지 등록 및 수정 기능 구현 (상품 등록 페이지, 상품 수정 페이지 - 파일 선택, 미리보기, 최대 3개 제한).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**2025년 05월 13일**
+
+- (미정) "상품 등록하기" 페이지에서 파일을 선택하여 이미지를 업로드하고 미리보기를 보여주는 기능을 구현합니다.
+- (오전 09:24) "상품 등록하기" (http://localhost:3000/products) 먼저 테스트해야함 -> 등록하기 화면부터 만들기 시작.
+- (오전 10:39) 상품 등록 요청은 잘 보내지는 것으로 보임. 서버 응답에서 token을 요구하고 있음 -> localStorage에서 token 꺼내서 전달해야함.
+- (미정) 그러려면 회원가입/로그인 선행되어야함. 확인 -> localStorage에 accessToken 잘 저장됨.
+- (오전 11:22) 상품 등록할 때 localStorage에서 accessToken을 꺼내서 서버에 또 줘야함 (create-form/page.jsx에서 사용).
+- (미정) Next.js를 처음 써봐서 app/api/ 에 route.js를 모아두지 않고 app/ 아래의 세그먼트들에 바로 route.js를 사용하고 있어서 골치아픈 문제가 있다. (일반적으로 app/api/아래에 route.js를 모아두고 app/ 아래에 page.jsx 컴포넌트들을 모아두는 방법이 일반적이라고 한다.) 일단 기능이 정상 작동하는 한 크게 신경쓰지 않기로 하자...
+- (오후 13:24) 회원가입/로그인/토큰확인까지 OK, 상품 목록 조회하기를 코드잇 서버가 아닌 내 서버 주소로 옮기는 과정에서 요청 및 데이터가 제대로 오지 않는 상황 발생.
+  - (미정) 1. 내 서버 주소로 옮겨서 데이터가 제대로 호출되는지 확인: OK
+  - (미정) 2. 상품 등록하는거 되는지 확인: OK
+  - (미정) 3. 이미지 업로드까지 구현하기: 진행중
+
+**2025년 05월 14일**
+
+- (오전 09:14) 상품 조회와 등록까지 확인(토큰 포함) -> 할일: 이미지업로드 API(multer)를 사용하여 이미지업로드하는 기능까지 완성해보자.
+- (오전 09:35) 백엔드의 RESTful한 API 설계와는 달리, Next.js에서는 세그먼트명에 new, edit 등 사용해도 큰 문제는 없다는 듯 합니다.
