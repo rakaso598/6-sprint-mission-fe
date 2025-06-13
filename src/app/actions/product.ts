@@ -1,5 +1,6 @@
 "use server";
 
+// (기존 코드 - getProductDetail 함수)
 export async function getProductDetail(itemId: number) {
   try {
     const response = await fetch(
@@ -27,9 +28,21 @@ export async function getProductDetail(itemId: number) {
   }
 }
 
+// --- productData 타입을 위한 인터페이스 정의 ---
+interface ProductUpdateData {
+  name?: string; // 상품 이름 (선택적)
+  description?: string; // 상품 설명 (선택적)
+  price?: number; // 상품 가격 (선택적)
+  imageUrl?: string; // 상품 이미지 URL (선택적)
+  category?: string; // 상품 카테고리 (선택적)
+  // 여기에 업데이트할 수 있는 다른 상품 속성들을 추가하세요.
+  // 예: stock?: number; isActive?: boolean; tags?: string[];
+}
+// ---------------------------------------------
+
 export async function updateProduct(
   itemId: number,
-  productData: {},
+  productData: ProductUpdateData, // 정의한 인터페이스를 타입으로 사용
   authToken: string
 ) {
   try {
@@ -67,6 +80,7 @@ export async function updateProduct(
   }
 }
 
+// (기존 코드 - deleteProduct 함수)
 export async function deleteProduct(itemId: number, authToken: string) {
   try {
     const response = await fetch(

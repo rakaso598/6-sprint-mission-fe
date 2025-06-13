@@ -1,6 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, ReactNode, MouseEvent } from "react";
 import ReactDOM from "react-dom";
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
+
+interface ModalWrapperProps {
+  theme: DefaultTheme;
+}
 
 const Overlay = styled.div`
   position: fixed;
@@ -12,14 +16,16 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000; // 모달이 다른 요소들 위에 오도록 z-index 추가
 `;
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.div<ModalWrapperProps>`
   background-color: ${({ theme }) => theme.colors.white};
   padding: 28px;
   border-radius: 8px;
   min-width: 327px;
   position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // 모달에 그림자 효과 추가
 
   @media ${({ theme }) => theme.mediaQuery.mobile} {
     padding: 23px;
@@ -34,9 +40,14 @@ const CloseButton = styled.button`
   border: none;
   font-size: 16px;
   cursor: pointer;
+  color: #333; // 닫기 버튼 색상
+  &:hover {
+    color: #000;
+  }
 `;
 
-function useScrollLock(enabled) {
+// 스크롤 잠금 훅
+function useScrollLock(enabled: boolean): void {
   useEffect(() => {
     if (enabled) {
       document.body.style.overflow = "hidden"; // 스크롤 고정
@@ -47,12 +58,32 @@ function useScrollLock(enabled) {
   }, [enabled]);
 }
 
-function Modal({ isOpen, closeButton = false, onClose, children }) {
+interface ModalProps {
+  isOpen: boolean;
+  closeButton?: boolean; // closeButton은 선택적이며 기본값은 false
+  onClose: () => void; // onClose는 아무것도 반환하지 않는 함수
+  children: ReactNode; // children은 React 노드 타입
+}
+
+function Modal({ isOpen, closeButton = false, onClose, children }: ModalProps) {
+  // 모달이 열려있을 때만 스크롤 잠금 활성화
   useScrollLock(isOpen);
 
-  const preventOverlayClick = (e) => e.stopPropagation();
+  // 오버레이 클릭 시 모달 내부 클릭 이벤트 전파 방지
+  const preventOverlayClick = (e: MouseEvent) => e.stopPropagation();
 
-  if (!isOpen) return null;
+  // 모달이 열려있지 않으면 아무것도 렌더링하지 않음
+  if (!isOpen) {
+    return null;
+  }
+
+  // "modal-root" ID를 가진 DOM 요소에 포탈 렌더링
+  const modalRoot = document.getElementById("modal-root");
+  if (!modalRoot) {
+    // modal-root 요소가 없으면 에러를 발생시키거나 경고를 남길 수 있습니다.
+    console.error("The DOM element with ID 'modal-root' was not found.");
+    return null;
+  }
 
   return ReactDOM.createPortal(
     <Overlay onClick={onClose}>
@@ -61,7 +92,7 @@ function Modal({ isOpen, closeButton = false, onClose, children }) {
         {children}
       </ModalWrapper>
     </Overlay>,
-    document.getElementById("modal-root")
+    modalRoot
   );
 }
 

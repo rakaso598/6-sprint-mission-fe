@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const LineDivider = styled.hr`
+interface LineDividerProps {
+  $margin?: string; // $margin prop의 타입을 string으로 정의합니다.
+}
+
+const LineDivider = styled.hr<LineDividerProps>`
   width: 100%;
   border: none;
   height: 1px;

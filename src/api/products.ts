@@ -1,11 +1,17 @@
 import axios from "./axios.js";
 
 type TGetProduct = {
-  orderBy: string;
-  page: number;
-  pageSize: number;
-  keyword: string;
+  orderBy?: string;
+  page?: number;
+  pageSize?: number;
+  keyword?: string;
 };
+
+export interface ProductUpdateData {
+  name?: string;
+  price?: number;
+  description?: string;
+}
 
 export async function getProducts({
   orderBy = "recent",
@@ -25,7 +31,7 @@ export async function getProducts({
   return { totalCount, list };
 }
 
-export async function addProduct(product: {}) {
+export async function addProduct(product: ProductUpdateData) {
   const response = await axios.post("/products", product);
   const newProduct = response.data;
   return newProduct;
@@ -37,7 +43,10 @@ export async function getProduct(productId: number) {
   return product;
 }
 
-export async function patchProduct(productId: number, partialProduct: {}) {
+export async function patchProduct(
+  productId: number,
+  partialProduct: ProductUpdateData
+) {
   const response = await axios.patch(`/products/${productId}`, partialProduct);
   const product = response.data;
   return product;
@@ -69,13 +78,14 @@ export async function getProductComments({
   const response = await axios.get(`/products/${productId}/comments`, {
     params: { limit, cursor },
   });
-  const { totalCount, list: comments } = response.data;
+  // totalCount가 필요 없으므로 비구조화 할당에서 제외합니다.
+  const { list: comments } = response.data;
   return comments;
 }
 
 export async function addProductComment(
   productId: number,
-  { content }: { content: {} }
+  { content }: { content: string }
 ) {
   const response = await axios.post(`/products/${productId}/comments`, {
     content,

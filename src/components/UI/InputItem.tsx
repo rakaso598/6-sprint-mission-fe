@@ -1,9 +1,16 @@
-import React from "react";
-import styled, { css } from "styled-components";
+// InputItem.tsx (이전과 동일하게 유지됩니다. 이 자체가 문제는 아닐 가능성이 높습니다.)
+import React, { InputHTMLAttributes } from "react";
+import styled, { css, DefaultTheme } from "styled-components";
 import ErrorMessage from "./ErrorMessage";
 import Label from "./Label";
+import { UseFormRegisterReturn } from "react-hook-form";
 
-export const inputStyle = css`
+interface InputStyleProps {
+  $error?: boolean;
+  theme: DefaultTheme;
+}
+
+export const inputStyle = css<InputStyleProps>`
   padding: 16px 24px;
   background-color: ${({ theme }) => theme.colors.gray[1]};
   color: ${({ theme }) => theme.colors.black};
@@ -13,7 +20,12 @@ export const inputStyle = css`
   width: 100%;
   outline: none;
   border: 1px solid transparent;
-  ${({ $error, theme }) => $error && css`border-color: ${theme.colors.red[0]};`}
+
+  ${({ $error, theme }) =>
+    $error &&
+    css`
+      border-color: ${theme.colors.red[0]};
+    `}
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray[0]};
@@ -24,25 +36,34 @@ export const inputStyle = css`
   }
 `;
 
-export const InputField = styled.input`
+export const InputField = styled.input<InputStyleProps>`
   ${inputStyle}
 `;
+
+interface InputItemProps extends InputHTMLAttributes<HTMLInputElement> {
+  id: string;
+  label?: string;
+  error?: string;
+  // FieldValues 타입 자체는 문제가 없습니다.
+  // 이 에러는 사용 맥락에서 발생할 가능성이 높습니다.
+  register?: UseFormRegisterReturn<string>;
+}
 
 function InputItem({
   id,
   label,
   error,
-  register = {},
+  register,
   ...inputProps
-}) {
+}: InputItemProps) {
   return (
     <div>
       {label && <Label htmlFor={id}>{label}</Label>}
       <InputField
         id={id}
-        $error={!!error} // 비표준 속성이기 때문에 `$`를 붙인 이름으로 styled-components에서만 사용
+        $error={!!error}
         {...inputProps}
-        {...register}
+        {...register} // 여기서 Type 'FieldValues' does not satisfy the constraint 'string'.ts(2344) 에러가 발생한다고 하셨습니다.
       />
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </div>

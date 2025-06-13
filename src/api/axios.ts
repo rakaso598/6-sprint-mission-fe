@@ -1,57 +1,44 @@
-import axiosLib, {
-  AxiosRequestConfig,
-  InternalAxiosRequestConfig,
-} from "axios";
-import NProgress from "nprogress";
-import { clearTokens, getTokens, setTokens } from "../utils/authToken.js";
+import axios from "axios";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-
-const axios = axiosLib.create({
-  baseURL: API_BASE_URL,
-  timeout: 1000,
-  headers: { "Content-Type": "application/json" },
+// 기본 URL 설정 (환경 변수 사용 권장)
+const instance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000", // 예시 URL, 실제 API URL로 변경 필요
+  timeout: 10000, // 요청 타임아웃 시간 (10초)
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-axios.interceptors.request.use(
-  function (config: any) {
-    NProgress.start();
-    const { accessToken } = getTokens();
-    if (accessToken) {
-      config.headers = {
-        ...config.headers,
-        Authorization: `Bearer ${accessToken}`,
-      };
-    }
+// 요청 인터셉터 추가
+instance.interceptors.request.use(
+  (config) => {
+    // 요청을 보내기 전에 수행할 작업 (예: 인증 토큰 추가)
+    // const token = localStorage.getItem('accessToken');
+    // if (token) {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // }
     return config;
   },
-  function (error) {
+  (error) => {
+    // 요청 오류 처리
     return Promise.reject(error);
   }
 );
 
-axios.interceptors.response.use(
-  function (response) {
-    NProgress.done();
-    if (response.data?.accessToken && response.data?.refreshToken) {
-      const { accessToken, refreshToken } = response.data;
-      setTokens({ accessToken, refreshToken });
-    }
+// 응답 인터셉터 추가
+instance.interceptors.response.use(
+  (response) => {
+    // 응답 데이터를 처리 (예: 데이터 전처리)
     return response;
   },
-  function (error) {
-    NProgress.done();
-    if (error.response?.status === 401) {
-      clearTokens();
-    }
-
-    const responseData = error.response?.data;
-    if (!!responseData?.message) {
-      return Promise.reject(new Error(responseData.message));
-    }
-
-    return Promise.reject(new Error("알 수 없는 오류입니다"));
+  (error) => {
+    // 응답 오류 처리 (예: 401 Unauthorized 에러 시 로그인 페이지로 리다이렉트)
+    // if (error.response?.status === 401) {
+    //   // 로그인 페이지로 리다이렉트 또는 토큰 갱신 로직
+    //   console.log('Unauthorized, redirecting to login...');
+    // }
+    return Promise.reject(error);
   }
 );
 
-export default axios;
+export default instance;

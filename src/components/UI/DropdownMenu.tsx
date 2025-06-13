@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import "./DropdownMenu.css";
-import styled from "styled-components";
 
-const SortIconPlaceholder = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: #555; /* 임시 정렬 아이콘 배경색 */
-  border-radius: 4px;
-`;
+interface DropdownMenuProps {
+  onSortSelection: (selection: string) => void;
+}
 
-function DropdownMenu({ onSortSelection }) {
+function DropdownMenu({ onSortSelection }: DropdownMenuProps) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
   };
@@ -47,4 +42,5 @@ function DropdownMenu({ onSortSelection }) {
     </div>
   );
 }
+
 export default DropdownMenu;

@@ -8,8 +8,18 @@ const HeartIconPlaceholder = styled.div`
   border-radius: 50%;
   margin-right: 4px;
 `;
+interface Item {
+  id: number;
+  name: string;
+  price: number;
+  favoriteCount: number;
+  imageUrl?: string;
+}
 
-function ItemCard({ item }) {
+interface ItemCardProps {
+  item: Item;
+}
+function ItemCard({ item }: ItemCardProps) {
   return (
     <div className="itemCard">
       <div className="itemSummary">

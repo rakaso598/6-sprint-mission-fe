@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Post from "../../../type/post";
+import Post from "../../../types/post";
 
 export default function PostItem({ post }: { post: Post }) {
   return (

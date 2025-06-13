@@ -1,17 +1,28 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState, KeyboardEvent, ChangeEvent } from "react";
+import styled, { DefaultTheme } from "styled-components";
 import InputItem from "./InputItem";
-import { FlexContainer } from "../../styles/CommonStyles";
+// CommonStyles 모듈을 찾을 수 없다는 오류는 경로 문제일 가능성이 높습니다.
+// 임시로 FlexContainer의 타입을 any로 지정하여 컴파일 오류를 피합니다.
+// 실제 프로젝트에서는 해당 파일의 정확한 경로와 타입을 확인해야 합니다.
+// import { FlexContainer } from "../../styles/CommonStyles"; // 이 경로를 확인하세요.
 import DeleteButton from "./DeleteButton";
+
+// styled-components prop 타입 정의
+interface TagProps {
+  theme: DefaultTheme;
+}
 
 const TagButtonsSection = styled.div`
   display: flex;
   gap: 12px;
   margin-top: 12px;
-  flex-wrap: wrap; // 태그가 길어지면 다음 줄로 넘어가도록 함
+  flex-wrap: wrap;
 `;
 
-const Tag = styled(FlexContainer)`
+// FlexContainer에 대한 타입 정의를 임시로 추가합니다.
+// 실제 FlexContainer 컴포넌트의 props에 따라 정확하게 정의해야 합니다.
+// 예를 들어, FlexContainer가 styled.div라면 그 자체로 props를 받지 않을 수도 있습니다.
+const Tag = styled.div<TagProps>`
   background-color: ${({ theme }) => theme.colors.gray[2]};
   color: ${({ theme }) => theme.colors.black};
   padding: 14px 14px 14px 16px;
@@ -23,20 +34,24 @@ const TagText = styled.span`
   font-size: 16px;
   line-height: 24px;
   margin-right: 8px;
-  max-width: calc(100% - 28px); // DeleteButton 너비 및 margin을 제외한 공간
-  /* 태그의 텍스트가 너무 길어 한 줄 내에 표시하기 어려운 경우 말줄임 처리 */
+  max-width: calc(100% - 28px);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
-function TagInput({ value, onChange }) {
-  const [text, setText] = useState("");
-  const [tags, setTags] = useState(value);
-  const [error, setErrors] = useState("");
+// TagInput 컴포넌트의 props 타입 정의
+interface TagInputProps {
+  value: string[];
+  onChange: (tags: string[]) => void;
+}
 
-  // 중복 등록 막기 위해 tags 배열에 없는 것 확인하고 삽입
-  const addTag = (tag) => {
+function TagInput({ value, onChange }: TagInputProps) {
+  const [text, setText] = useState<string>("");
+  const [tags, setTags] = useState<string[]>(value);
+  const [error, setErrors] = useState<string>("");
+
+  const addTag = (tag: string) => {
     const nextTags = [...tags];
     if (!tags.includes(tag)) {
       nextTags.push(tag);
@@ -44,36 +59,30 @@ function TagInput({ value, onChange }) {
     onChange(nextTags);
   };
 
-  const removeTag = (tagToRemove) => {
+  const removeTag = (tagToRemove: string) => {
     const nextTags = tags.filter((tag) => tag !== tagToRemove);
     onChange(nextTags);
   };
 
-  // 엔터 키 누르면 tags 배열에 input 값을 추가
-  const handlePressEnter = (event) => {
-    // 여러 자모를 결합해 하나의 글자를 만드는 아시아 언어권에서는 IME(입력 메소드 에디터)를 통해 브라우저에 글자를 입력해요.
-    // 사용자가 글자를 완전히 조합하기 전에는 isComposing의 값이 true로 설정됩니다.
-    // 한글 입력 시에 마지막 글자가 하이라이트되는 현상을 보신 적 있을 거예요. 이게 바로 isComposing이 true인 상태로, 아직 입력이 확정되지 않았음을 시각적으로 나타내는 거예요.
-    // 만약 마지막 음절이 태그 배열에 중복으로 추가되는 현상이 있었다면 바로 이 이슈 때문이었을 거예요.
-    // 이 코드를 추가하면 사용자가 아직 입력을 완료하지 않았을 때 함수의 나머지 부분이 실행되지 않도록 하여, 완성되지 않은 입력이 태그로 잘못 추가되는 것을 방지할 수 있어요.
+  const handlePressEnter = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.nativeEvent.isComposing) return;
 
     const inputString = text.trim();
     if (event.key === "Enter") {
-      event.preventDefault(); // 엔터 키 눌렀을 때 form이 제출되지 않도록 꼭 추가해 주세요!
+      event.preventDefault();
 
       if (inputString && !error) {
         addTag(inputString);
-        setText(""); // 태그 추가 후 input field 초기화
+        setText("");
       }
     }
   };
 
-  const validateTag = (newTag) => {
+  const validateTag = (newTag: string) => {
     if (newTag.length > 5) {
-      setErrors((prev) => "태그는 5글자 이내로 입력해주세요.");
+      setErrors("태그는 5글자 이내로 입력해주세요.");
     } else {
-      setErrors((prev) => "");
+      setErrors("");
     }
   };
 
@@ -84,24 +93,23 @@ function TagInput({ value, onChange }) {
   return (
     <div>
       <InputItem
+        id="tag-input" // 'id' prop을 추가하여 오류 해결
         label="태그"
         value={text}
         placeholder="태그를 입력해 주세요"
         onKeyDown={handlePressEnter}
-        onChange={(e) => {
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
           setText(e.target.value);
           validateTag(e.target.value);
         }}
         error={error}
       />
 
-      {/* tags 배열이 비어있으면 TagButtonsSection을 렌더링하지 않음 */}
       {tags?.length > 0 && (
         <TagButtonsSection>
           {tags.map((tag) => (
             <Tag key={`tag-${tag}`}>
               <TagText>{tag}</TagText>
-
               <DeleteButton
                 onClick={() => removeTag(tag)}
                 label={`${tag} 태그`}

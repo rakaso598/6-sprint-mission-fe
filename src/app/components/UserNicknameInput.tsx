@@ -1,5 +1,5 @@
 import React from "react";
-import TUserInput from "../../type/TUserInput";
+import TUserInput from "../../types/TUserInput";
 
 function UserNicknameInput({ value, onChange }: TUserInput) {
   return (
