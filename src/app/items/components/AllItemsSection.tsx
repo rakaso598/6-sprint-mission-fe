@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 // 다른 컴포넌트 import (경로 확인)
 import ItemCard from "./ItemCard"; // ItemCard 컴포넌트 경로 및 props 타입 확인 필요
-import DropdownMenu from "../../../components/UI/DropdownMenu"; // DropdownMenu 컴포넌트 경로 및 props 타입 확인 필요
+import DropdownMenu from "../../../components/ui/DropdownMenu"; // DropdownMenu 컴포넌트 경로 및 props 타입 확인 필요
 
 // API 서비스 파일에서 정의한 Product 타입을 여기에 직접 정의하거나,
 // 해당 파일에서 export된 타입을 임포트하는 것이 이상적입니다.

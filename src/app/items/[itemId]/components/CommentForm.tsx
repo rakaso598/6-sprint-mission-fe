@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import Button from "@/components/UI/Button";
+import Button from "@/components/ui/Button";
 // import TextareaItem from "@/components/UI/TextareaItem";
 
 const COMMENT_PLACEHOLDER =

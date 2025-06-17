@@ -7,8 +7,8 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import axios from "@/api/axios";
-import Button from "@/components/UI/Button";
-import TextareaItem from "@/components/UI/TextareaItem";
+import Button from "@/components/ui/Button";
+import TextareaItem from "@/components/ui/TextareaItem";
 import Image from "next/image";
 
 interface Product {
