@@ -1,20 +1,16 @@
-// src/app/items/[itemId]/page.tsx
-
-"use client"; // 이 지시어는 Next.js App Router에서 클라이언트 컴포넌트임을 명시합니다.
+"use client";
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useQueryClient } from "@tanstack/react-query"; // CommentSection 내부에서 사용
-import axios from "@/api/axios"; // axios 인스턴스 경로 확인 (DetailBody, ItemCommentSection에서 사용)
-import Button from "@/components/UI/Button"; // CommentForm에서 사용
-import TextareaItem from "@/components/UI/TextareaItem"; // CommentForm에서 사용
+import { useQueryClient } from "@tanstack/react-query";
+import axios from "@/api/axios";
+import Button from "@/components/UI/Button";
+import TextareaItem from "@/components/UI/TextareaItem";
+import Image from "next/image";
 
-// ====================================================================
-// Product 데이터 타입 정의 (외부 파일에서 가져오던 것)
-// ====================================================================
 interface Product {
   id: number;
   name: string;
@@ -27,10 +23,6 @@ interface Product {
   favoriteCount?: number;
 }
 
-// ====================================================================
-// getProductDetail 함수 (외부 파일에서 가져오던 것)
-// ====================================================================
-// 실제 API 엔드포인트와 응답 구조에 맞게 수정 필요합니다.
 async function getProductDetail(productId: number): Promise<Product> {
   try {
     const response = await axios.get<Product>(`/articles/${productId}`);
@@ -41,10 +33,6 @@ async function getProductDetail(productId: number): Promise<Product> {
   }
 }
 
-// ====================================================================
-// addProductComment 함수 (ItemCommentSection 내부에서 사용)
-// ====================================================================
-// 댓글 추가 API 함수 (실제 API 경로와 응답 구조에 맞게 수정 필요)
 interface AddCommentPayload {
   content: string;
 }
@@ -60,9 +48,6 @@ async function addProductComment(
   }
 }
 
-// ====================================================================
-// DetailImage 컴포넌트 (외부 파일에서 가져오던 것)
-// ====================================================================
 interface DetailImageProps {
   product: Product;
 }
@@ -70,7 +55,7 @@ function DetailImage({ product }: DetailImageProps) {
   return (
     <div className="flex justify-center items-center h-64 bg-gray-100 rounded-lg overflow-hidden mb-4">
       {product.imageUrl ? (
-        <img
+        <Image
           src={product.imageUrl}
           alt={product.name}
           className="object-cover w-full h-full"
@@ -82,9 +67,6 @@ function DetailImage({ product }: DetailImageProps) {
   );
 }
 
-// ====================================================================
-// DetailBody 컴포넌트 (외부 파일에서 가져오던 것)
-// ====================================================================
 interface DetailBodyProps {
   product: Product;
 }
@@ -167,9 +149,6 @@ function DetailContact() {
   );
 }
 
-// ====================================================================
-// CommentForm 컴포넌트 (외부 파일에서 가져오던 것)
-// ====================================================================
 const COMMENT_PLACEHOLDER =
   "개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다.";
 
@@ -244,10 +223,6 @@ function CommentForm({
   );
 }
 
-// ====================================================================
-// CommentThread 컴포넌트 (외부 파일에서 가져오던 것)
-// ====================================================================
-// Comment 데이터 타입 정의 (실제 API 응답에 맞춰 속성을 추가하거나 수정)
 interface Comment {
   id: number;
   content: string;
@@ -336,9 +311,6 @@ function CommentThread({ productId }: CommentThreadProps) {
   );
 }
 
-// ====================================================================
-// ItemCommentSection 컴포넌트 (외부 파일에서 가져오던 것)
-// ====================================================================
 const CommentInputSection = styled.section`
   display: flex;
   flex-direction: column;
@@ -376,9 +348,6 @@ const ItemCommentSection = ({ productId }: ItemCommentSectionProps) => {
   );
 };
 
-// ====================================================================
-// ProductDetailPage 메인 컴포넌트
-// ====================================================================
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();
