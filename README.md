@@ -7,7 +7,7 @@
 
 **2025년 04월 25일**
 
-- (미정) /products route.js CRUD 작성: 완료.
+- (미정) /products rosute.js CRUD 작성: 완료.
 - (미정) 상품 상세 페이지 page.jsx 컴포넌트 만들기 -> /items/{itemId}/page.jsx 만들고 화면 만들기 -> 상품 API는 [2]의 route.js 사용 (특이사항: '로컬스토리지' 인가된 사용자만 사용 가능):
   - (미정) 상품 상세 페이지 (`page.jsx`)에서 `route.js` (`.env.development` 값 사용) 연동 및 작동 확인.
   - (미정) 쿠키 읽기, 수정, 삭제 기능 확인.
